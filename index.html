@@ -237,6 +237,39 @@
                 font-size: calc(1.8rem + 2vw);
             }
         }
+        /* 👑 クレイジーかっこいいDocs誘導ボタン */
+.docs-link-button {
+    display: block;
+    background: linear-gradient(135deg, var(--primary) 0%, #0043a4 100%);
+    color: white !important;
+    text-decoration: none;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-align: center;
+    margin-top: 2rem;
+    box-shadow: 0 6px 15px rgba(0, 82, 204, 0.2);
+    transition: all 0.2s ease;
+}
+
+/* パソコン・マウス操作時のホバーエフェクト（自動感知） */
+@media (hover: hover) and (pointer: fine) {
+    .docs-link-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 82, 204, 0.35);
+        filter: brightness(1.1);
+    }
+}
+
+/* スマホでのタップ時のエフェクト（自動感知） */
+@media (hover: none) {
+    .docs-link-button:active {
+        filter: brightness(0.9);
+        transform: scale(0.98);
+    }
+}
+
     </style>
 </head>
 <body>
@@ -255,7 +288,9 @@
         <div class="card">
             <h2>Our Services (今後の展開)</h2>
             <p>We provide a multi-layered ecosystem including legitimate device guidance and digital literacy advocacy. We plan to sequentially launch diverse digital solutions to meet the evolving needs of the global community.</p>
-        <a href="https://ryopc.github.io/docs" class="doc-link-button">docs</a>
+        <!-- 👑 Docs専用Webページ（/docs）へ流れるように導くボタン -->
+<a href="docs/" class="docs-link-button">View Project Documentation (公式ドキュメント閲覧) ➔</a>
+
         </div>
     </div>
 <script>
