@@ -161,7 +161,7 @@ function bootChannelTalk() {
             w.ChannelIOInitialized = true;
             var s = document.createElement('script');
             s.type = 'text/javascript'; s.async = true;
-            s.src = 'channel.io'; // 👈 確実につなぐための公式CDN正規URL
+            s.src = 'https://cdn.channel.io/plugin/ch-plugin-web.js'; // 👈 確実につなぐための公式CDN正規URL
             s.charset = 'UTF-8';
             var x = document.getElementsByTagName('script')[0] || document.body;
             x.parentNode.insertBefore(s, x);
