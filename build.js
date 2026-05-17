@@ -35,13 +35,14 @@ async function buildBlog() {
       return;
   }
 
-  const url = `https://${serviceDomain}.microcms.io/api/v1/articles`;
+  // 末尾のエンドポイント名を「blog」に変更しました
+  const url = `https://${serviceDomain}.microcms.io/api/v1/blog`;
 
   try {
     // 1. マイクロCMSから記事一覧を取得
     const data = await fetchFromMicroCMS(url, apiKey);
     
-    // 2. レスポンスの構造チェック（undefinedエラー対策）
+    // 2. レスポンスの構造チェック
     if (!data || !data.contents || !Array.isArray(data.contents)) {
         console.error('【エラー】マイクロCMSからのデータ構造が正しくありません。取得データ:', data);
         return;
@@ -49,10 +50,9 @@ async function buildBlog() {
 
     const articles = data.contents; // 記事データの配列
 
-    // 3. 紹介文なしのシンプルな記事一覧カードを組み立てる
+    // 3. 記事一覧カードを組み立てる
     let articleCards = '';
     articles.forEach(article => {
-      // 公開日のフォーマット調整
       const dateStr = article.publishedAt ? article.publishedAt.split('T')[0] : 
                       (article.createdAt ? article.createdAt.split('T')[0] : '日付不明');
 
@@ -71,7 +71,6 @@ async function buildBlog() {
       `;
     });
 
-    // 記事が1つもない場合の表示
     if (articles.length === 0) {
         articleCards = `
         <section class="card">
@@ -145,17 +144,6 @@ async function buildBlog() {
         .nav-links a { color: var(--white); text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: var(--transition); opacity: 0.8; }
         .nav-links a:hover { color: var(--accent); opacity: 1; }
 
-        .lang-selector {
-            background: rgba(255, 255, 255, 0.1); color: var(--white);
-            border: 1px solid rgba(255, 255, 255, 0.2); padding: 6px 12px;
-            border-radius: 10px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: var(--transition);
-        }
-        .lang-selector:hover { background: rgba(255, 255, 255, 0.2); }
-        .lang-selector option { background: var(--dark); color: var(--white); }
-        
-        .menu-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 5px; }
-        .menu-toggle span { display: block; width: 22px; height: 2px; background: var(--white); border-radius: 2px; transition: var(--transition); }
-
         header {
             background: radial-gradient(circle at top right, var(--dark-light), var(--dark));
             color: var(--white); padding: 12rem 1.5rem 11rem; text-align: center; position: relative; overflow: hidden;
@@ -206,8 +194,6 @@ async function buildBlog() {
     <nav class="navbar">
         <div class="nav-logo" onclick="window.location.href='/'">ryopc org</div>
         <div class="nav-right">
-            <select class="lang-selector" id="langSelector"><option value="ja">日本語</option></select>
-            <button class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></button>
             <ul class="nav-links" id="navLinks">
                 <li><a href="/">ホーム</a></li>
                 <li><a href="/blog/">ブログ一覧</a></li>
@@ -240,10 +226,6 @@ async function buildBlog() {
             const scrolled = (winScroll / height) * 100;
             document.getElementById("scroll-progress").style.width = scrolled + "%";
         };
-        const menuToggle = document.getElementById('menuToggle');
-        const navLinks = document.getElementById('navLinks');
-        menuToggle.onclick = (e) => { e.stopPropagation(); navLinks.classList.toggle('active'); };
-        document.onclick = () => navLinks.classList.remove('active');
     </script>
 </body>
 </html>
