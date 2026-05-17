@@ -1,91 +1,262 @@
 const fs = require('fs');
 const path = require('path');
 
-// 🔒 Cloudflare Pagesの環境変数から注入
-const API_KEY = process.env.MICROCMS_API_KEY;
-const SERVICE_DOMAIN = process.env.MICROCMS_SERVICE_DOMAIN;
+// 環境変数から設定を読み込む
+const serviceDomain = process.env.MICROCMS_SERVICE_DOMAIN;
+const apiKey = process.env.MICROCMS_API_KEY;
 
 async function buildBlog() {
-  const blogDir = path.join(__dirname, 'blog');
-  const targetDir = path.join(blogDir, 'articles');
+  const url = `https://${serviceDomain}.microcms.io/api/v1/articles`;
 
   try {
-    // 1. ビルドの裏側でmicroCMSから安全に記事を取得
-    const response = await fetch(`https://${SERVICE_DOMAIN}.microcms.io/api/v1/blog`, {
-      headers: { "X-MICROCMS-API-KEY": API_KEY }
+    // 1. マイクロCMSから記事一覧を取得する
+    const response = await fetch(url, {
+      headers: {
+        'X-MICROCMS-API-KEY': apiKey
+      }
     });
+    
     const data = await response.json();
+    const articles = data.contents; // 記事データの配列
 
-    // --------------------------------------------------
-    // ⭐ 追加：ブログ一覧ページ（blog/index.html）の生成
-    // --------------------------------------------------
-    fs.mkdirSync(blogDir, { recursive: true });
+    // 2. 紹介文なしのシンプルな記事一覧カードを組み立てる
+    let articleCards = '';
+    articles.forEach(article => {
+      // 公開日のフォーマット調整（日付部分だけを抽出）
+      const dateStr = article.publishedAt ? article.publishedAt.split('T')[0] : '';
 
-    // 記事データの配列から、<li>タグのリストを自動組み立て
-    const listItemsHtml = data.contents.map(post => {
-      const date = new Date(post.createdAt).toLocaleDateString('ja-JP');
-      // URLはドットHTMLなしの綺麗な形（/blog/articles/記事ID）を指定
-      return `
-    <li>
-      <span style="color:#666; margin-right:15px;">${date}</span>
-      <a href="/blog/articles/${post.id}" style="color:#0066cc; font-weight:bold; text-decoration:none;">${post.title}</a>
-    </li>`;
-    }).join('');
+      articleCards += `
+        <article class="card" onclick="window.location.href='/articles/${article.id}.html'" style="cursor: pointer;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                <h2 style="margin: 0;">${article.title}</h2>
+                <span style="color: var(--text-light); font-size: 0.9rem; font-weight: 600;">${dateStr}</span>
+            </div>
+            <div style="margin-top: 1.5rem; text-align: right;">
+                <a href="/articles/${article.id}.html" style="color: var(--primary); font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 5px;">
+                    続きを読む ➔
+                </a>
+            </div>
+        </article>
+      `;
+    });
 
-    const indexHtmlContent = `
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <title>ブログ記事一覧</title>
-  <style>body { font-family: sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; } ul { list-style:none; padding:0; } li { margin-bottom:15px; }</style>
-</head>
-<body>
-  <h1>ブログ記事一覧</h1>
-  <p><a href="/">← ホームへ戻る</a></p>
-  <hr>
-  <ul>
-    ${listItemsHtml}
-  </ul>
-</body>
-</html>`;
-
-    // blog/index.html として書き出す
-    fs.writeFileSync(path.join(blogDir, 'index.html'), indexHtmlContent);
-    console.log("生成完了: /blog/index.html (一覧ページ)");
-
-
-    // --------------------------------------------------
-    // 2. 記事の数だけループして「フォルダ / index.html」を自動生成（元の処理）
-    // --------------------------------------------------
-    for (const post of data.contents) {
-      const postDir = path.join(targetDir, post.id); 
-      fs.mkdirSync(postDir, { recursive: true });
-
-      const htmlContent = `
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <title>${post.title}</title>
-  <style>body { font-family: sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; }</style>
-</head>
-<body>
-  <h1>${post.title}</h1>
-  <p style="color:#666;">公開日: ${new Date(post.createdAt).toLocaleDateString('ja-JP')}</p>
-  <hr>
-  <div>${post.body}</div>
-  <p><a href="/blog">← ブログ一覧へ戻る</a></p>
-</body>
-</html>`;
-
-      fs.writeFileSync(path.join(postDir, 'index.html'), htmlContent);
-      console.log(`生成完了: /blog/articles/${post.id}`);
+    // 記事が1つもない場合の表示
+    if (articles.length === 0) {
+        articleCards = `
+        <section class="card">
+            <h2>No Articles</h2>
+            <p>現在、投稿された記事はありません。</p>
+        </section>
+        `;
     }
 
+    // 3. 全体のHTMLテンプレートを作る（ryopc orgのデザインをベースに結合）
+    // ※階層が blog/ 直下（1つ浅い階層）になったため、favicon等のパスを ../ に修正しています。
+    const htmlContent = `
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Blog - ryopc Global Digital Support</title>
+    
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #0052cc;
+            --primary-light: #0764f1;
+            --dark: #0a192f;
+            --dark-light: #172a45;
+            --accent: #00bfff;
+            --bg: #f8fafc;
+            --text: #334155;
+            --text-light: #94a3b8;
+            --white: #ffffff;
+            --glass: rgba(13, 29, 52, 0.9);
+            --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            --gradient-accent: linear-gradient(135deg, #00bfff, #0052cc);
+            --gradient-orange: linear-gradient(135deg, #ff5000, #ff8c00);
+        }
+        
+        * { box-sizing: border-box; outline: none; }
+        html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+        
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            margin: 0; padding: 0;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        #scroll-progress {
+            position: fixed; top: 0; left: 0; width: 0%; height: 4px;
+            background: var(--gradient-accent);
+            z-index: 1000001; transition: width 0.1s;
+        }
+
+        /* --- ナビゲーションバー --- */
+        .navbar {
+            position: fixed; top: 0; left: 0; width: 100%;
+            background: var(--glass); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 1rem 2.5rem; z-index: 100000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .nav-logo { color: var(--white); font-weight: 800; font-size: 1.2rem; cursor: pointer; }
+        
+        .nav-right { display: flex; align-items: center; gap: 2rem; }
+        .nav-links { display: flex; gap: 2rem; list-style: none; margin: 0; padding: 0; }
+        .nav-links a { color: var(--white); text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: var(--transition); opacity: 0.8; }
+        .nav-links a:hover { color: var(--accent); opacity: 1; }
+
+        /* 言語セレクター */
+        .lang-selector {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 6px 12px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .lang-selector:hover { background: rgba(255, 255, 255, 0.2); }
+        .lang-selector option { background: var(--dark); color: var(--white); }
+        
+        .menu-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 5px; }
+        .menu-toggle span { display: block; width: 22px; height: 2px; background: var(--white); border-radius: 2px; transition: var(--transition); }
+
+        /* ヘッダー */
+        header {
+            background: radial-gradient(circle at top right, var(--dark-light), var(--dark));
+            color: var(--white);
+            padding: 12rem 1.5rem 11rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header h1 {
+            margin: 0; font-size: clamp(2.8rem, 10vw, 4.5rem); font-weight: 800;
+            background: linear-gradient(135deg, var(--white) 40%, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        header p {
+            font-size: 1.25rem; max-width: 700px; margin: 2rem auto 0;
+            color: var(--text-light); opacity: 0.9;
+        }
+
+        /* コンテンツ */
+        .container { max-width: 900px; margin: -5rem auto 6rem; padding: 0 1.5rem; position: relative; z-index: 10; }
+        .card {
+            background: var(--white); padding: 2.5rem 3rem; border-radius: 32px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08); margin-bottom: 2rem;
+            border: 1px solid rgba(226, 232, 240, 0.8); transition: var(--transition);
+        }
+        .card:hover { transform: translateY(-6px); border-color: var(--accent); }
+
+        h2 { color: var(--dark); font-size: 1.6rem; margin-top: 0; display: flex; align-items: center; gap: 1rem; }
+        h2::before { content: ""; display: inline-block; width: 6px; height: 26px; background: var(--gradient-accent); border-radius: 10px; }
+
+        footer { background-color: var(--dark); color: var(--text-light); padding: 6rem 1.5rem 10rem; text-align: center; }
+        .status-badge {
+            display: inline-flex; align-items: center; gap: 8px; background-color: rgba(30, 41, 59, 0.8);
+            color: var(--accent); padding: 0.7rem 1.5rem; border-radius: 100px; font-size: 0.9rem; font-weight: 600;
+        }
+        .status-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 10px var(--accent); animation: pulse 2s infinite; }
+
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+
+        @media (max-width: 900px) {
+            .nav-right { gap: 1rem; }
+            .nav-links { display: none; }
+            .nav-links.active {
+                display: flex; position: absolute; top: 100%; left: 0; width: 100%;
+                background: var(--dark); flex-direction: column; padding: 2rem 0;
+            }
+            .menu-toggle { display: flex; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="scroll-progress"></div>
+
+    <nav class="navbar">
+        <div class="nav-logo" onclick="window.location.href='/'">ryopc org</div>
+        
+        <div class="nav-right">
+            <select class="lang-selector" id="langSelector">
+                <option value="ja">日本語</option>
+            </select>
+
+            <button class="menu-toggle" id="menuToggle">
+                <span></span><span></span><span></span>
+            </button>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="/">ホーム</a></li>
+                <li><a href="/blog/">ブログ一覧</a></li>
+                <li><a href="https://docs.ryopc.f5.si">ドキュメント</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header>
+        <h1>ryopc Blog</h1>
+        <p>ryopc org の最新記事・アップデート情報一覧</p>
+    </header>
+
+    <div class="container" id="contentContainer">
+        ${articleCards}
+    </div>
+
+    <footer>
+        <p>&copy; 2026 ryopc Global Initiative. All Rights Reserved.</p>
+        <div class="status-badge">
+            <span class="status-dot"></span>
+            <span>Status: Active (Cloudflare Pages)</span>
+        </div>
+    </footer>
+
+    <script>
+        window.onscroll = () => {
+            const winScroll = document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById("scroll-progress").style.width = scrolled + "%";
+        };
+
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+        menuToggle.onclick = (e) => { e.stopPropagation(); navLinks.classList.toggle('active'); };
+        document.onclick = () => navLinks.classList.remove('active');
+    </script>
+</body>
+</html>
+    `;
+
+    // 4. blog フォルダ直下に index.html として出力
+    const targetDir = path.join(__dirname, 'blog');
+    if (!fs.existsSync(targetDir)) {
+        fs.mkdirSync(targetDir, { recursive: true });
+    }
+    
+    fs.writeFileSync(path.join(targetDir, 'index.html'), htmlContent.trim());
+    console.log('blog/index.html を作成しました！');
+
   } catch (error) {
-    console.error("ビルド中にエラーが発生しました:", error);
-    process.exit(1);
+    console.error('エラーが発生しました:', error);
   }
 }
 
