@@ -1,29 +1,60 @@
 const fs = require('fs');
 const path = require('path');
+const https = require('https');
 
 // 環境変数から設定を読み込む
 const serviceDomain = process.env.MICROCMS_SERVICE_DOMAIN;
 const apiKey = process.env.MICROCMS_API_KEY;
 
+// 安全にAPIからデータを取得するための関数
+function fetchFromMicroCMS(url, key) {
+    return new Promise((resolve, reject) => {
+        const options = {
+            headers: { 'X-MICROCMS-API-KEY': key }
+        };
+        https.get(url, options, (res) => {
+            let data = '';
+            res.on('data', (chunk) => { data += chunk; });
+            res.on('end', () => {
+                try {
+                    resolve(JSON.parse(data));
+                } catch (e) {
+                    reject(new Error('JSONの解析に失敗しました。レスポンスが空か不正です。'));
+                }
+            });
+        }).on('error', (err) => {
+            reject(err);
+        });
+    });
+}
+
 async function buildBlog() {
+  // 環境変数のチェック
+  if (!serviceDomain || !apiKey) {
+      console.error('【エラー】環境変数 MICROCMS_SERVICE_DOMAIN または MICROCMS_API_KEY が設定されていません。');
+      return;
+  }
+
   const url = `https://${serviceDomain}.microcms.io/api/v1/articles`;
 
   try {
-    // 1. マイクロCMSから記事一覧を取得する
-    const response = await fetch(url, {
-      headers: {
-        'X-MICROCMS-API-KEY': apiKey
-      }
-    });
+    // 1. マイクロCMSから記事一覧を取得
+    const data = await fetchFromMicroCMS(url, apiKey);
     
-    const data = await response.json();
+    // 2. レスポンスの構造チェック（undefinedエラー対策）
+    if (!data || !data.contents || !Array.isArray(data.contents)) {
+        console.error('【エラー】マイクロCMSからのデータ構造が正しくありません。取得データ:', data);
+        return;
+    }
+
     const articles = data.contents; // 記事データの配列
 
-    // 2. 紹介文なしのシンプルな記事一覧カードを組み立てる
+    // 3. 紹介文なしのシンプルな記事一覧カードを組み立てる
     let articleCards = '';
     articles.forEach(article => {
-      // 公開日のフォーマット調整（日付部分だけを抽出）
-      const dateStr = article.publishedAt ? article.publishedAt.split('T')[0] : '';
+      // 公開日のフォーマット調整
+      const dateStr = article.publishedAt ? article.publishedAt.split('T')[0] : 
+                      (article.createdAt ? article.createdAt.split('T')[0] : '日付不明');
 
       articleCards += `
         <article class="card" onclick="window.location.href='/articles/${article.id}.html'" style="cursor: pointer;">
@@ -50,8 +81,7 @@ async function buildBlog() {
         `;
     }
 
-    // 3. 全体のHTMLテンプレートを作る（ryopc orgのデザインをベースに結合）
-    // ※階層が blog/ 直下（1つ浅い階層）になったため、favicon等のパスを ../ に修正しています。
+    // 4. 全体のHTMLテンプレートを作る
     const htmlContent = `
 <!DOCTYPE html>
 <html lang="ja">
@@ -101,7 +131,6 @@ async function buildBlog() {
             z-index: 1000001; transition: width 0.1s;
         }
 
-        /* --- ナビゲーションバー --- */
         .navbar {
             position: fixed; top: 0; left: 0; width: 100%;
             background: var(--glass); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
@@ -116,17 +145,10 @@ async function buildBlog() {
         .nav-links a { color: var(--white); text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: var(--transition); opacity: 0.8; }
         .nav-links a:hover { color: var(--accent); opacity: 1; }
 
-        /* 言語セレクター */
         .lang-selector {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--white);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 6px 12px;
-            border-radius: 10px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.1); color: var(--white);
+            border: 1px solid rgba(255, 255, 255, 0.2); padding: 6px 12px;
+            border-radius: 10px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: var(--transition);
         }
         .lang-selector:hover { background: rgba(255, 255, 255, 0.2); }
         .lang-selector option { background: var(--dark); color: var(--white); }
@@ -134,29 +156,18 @@ async function buildBlog() {
         .menu-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 5px; }
         .menu-toggle span { display: block; width: 22px; height: 2px; background: var(--white); border-radius: 2px; transition: var(--transition); }
 
-        /* ヘッダー */
         header {
             background: radial-gradient(circle at top right, var(--dark-light), var(--dark));
-            color: var(--white);
-            padding: 12rem 1.5rem 11rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
+            color: var(--white); padding: 12rem 1.5rem 11rem; text-align: center; position: relative; overflow: hidden;
         }
 
         header h1 {
             margin: 0; font-size: clamp(2.8rem, 10vw, 4.5rem); font-weight: 800;
             background: linear-gradient(135deg, var(--white) 40%, var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
+        header p { font-size: 1.25rem; max-width: 700px; margin: 2rem auto 0; color: var(--text-light); opacity: 0.9; }
 
-        header p {
-            font-size: 1.25rem; max-width: 700px; margin: 2rem auto 0;
-            color: var(--text-light); opacity: 0.9;
-        }
-
-        /* コンテンツ */
         .container { max-width: 900px; margin: -5rem auto 6rem; padding: 0 1.5rem; position: relative; z-index: 10; }
         .card {
             background: var(--white); padding: 2.5rem 3rem; border-radius: 32px;
@@ -194,16 +205,9 @@ async function buildBlog() {
 
     <nav class="navbar">
         <div class="nav-logo" onclick="window.location.href='/'">ryopc org</div>
-        
         <div class="nav-right">
-            <select class="lang-selector" id="langSelector">
-                <option value="ja">日本語</option>
-            </select>
-
-            <button class="menu-toggle" id="menuToggle">
-                <span></span><span></span><span></span>
-            </button>
-
+            <select class="lang-selector" id="langSelector"><option value="ja">日本語</option></select>
+            <button class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></button>
             <ul class="nav-links" id="navLinks">
                 <li><a href="/">ホーム</a></li>
                 <li><a href="/blog/">ブログ一覧</a></li>
@@ -236,7 +240,6 @@ async function buildBlog() {
             const scrolled = (winScroll / height) * 100;
             document.getElementById("scroll-progress").style.width = scrolled + "%";
         };
-
         const menuToggle = document.getElementById('menuToggle');
         const navLinks = document.getElementById('navLinks');
         menuToggle.onclick = (e) => { e.stopPropagation(); navLinks.classList.toggle('active'); };
@@ -246,17 +249,17 @@ async function buildBlog() {
 </html>
     `;
 
-    // 4. blog フォルダ直下に index.html として出力
+    // 5. blog フォルダ直下に index.html として出力
     const targetDir = path.join(__dirname, 'blog');
     if (!fs.existsSync(targetDir)) {
         fs.mkdirSync(targetDir, { recursive: true });
     }
     
     fs.writeFileSync(path.join(targetDir, 'index.html'), htmlContent.trim());
-    console.log('blog/index.html を作成しました！');
+    console.log('【成功】blog/index.html を正常に作成しました！');
 
   } catch (error) {
-    console.error('エラーが発生しました:', error);
+    console.error('エラーが発生しました:', error.message);
   }
 }
 
