@@ -6,37 +6,17 @@ collections_config:
     path: ''
     icon: wysiwyg
     disable_url: false
-    disable_add: false
-    disable_add_folder: false
-    disable_file_actions: false
   blog:
-    path: blog/articles   # 👈 修正：フォルダパスを合わせました
+    path: blog/articles
     icon: event_available
     disable_url: false
-    output: true          # 👈 追加：Eleventyの一覧機能に必須です
-    _inputs:
-      \$.title:
-        cascade: true
-    disable_add: false
-    disable_add_folder: false
-    disable_file_actions: false
+    output: true
+    # 👇 🟢新しく記事を作ったとき、自動でEleventyに認識させるための設定を追加
+    schemas:
+      default:
+        path: ''
+        target_path: 'blog/articles/{title}.md'
+    _defaults:
+      blog:
+        tags: blog
 timezone: Asia/Tokyo
-markdown:
-  engine: commonmark
-  options:
-    xhtml: false
-    breaks: false
-    linkify: false
-    typographer: false
-    spaced_lists: false
-    sentence_per_line: false
-    gfm: false
-    code_block_fences: '```'
-    escape_snippets_in_code_blocks: false
-    treat_indentation_as_code: false
-    table: false
-    strikethrough: false
-    subscript: false
-    superscript: false
-    heading_ids: false
-    attributes: false
