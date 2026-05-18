@@ -10,11 +10,12 @@ collections_config:
     disable_add_folder: false
     disable_file_actions: false
   blog:
-    path: blog
+    path: blog/articles   # 👈 修正：フォルダパスを合わせました
     icon: event_available
     disable_url: false
+    output: true          # 👈 追加：Eleventyの一覧機能に必須です
     _inputs:
-      $.title:
+      \$.title:
         cascade: true
     disable_add: false
     disable_add_folder: false
