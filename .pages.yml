@@ -6,7 +6,6 @@ collections:
     label: ブログ記事
     type: folder
     path: blog/articles
-    slug: "{{title}}"
 
     fields:
       - name: title
