@@ -4,104 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Blog - ryopc Global Digital Support</title>
-    
     <link rel="icon" type="image/png" href="../favicon.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-    
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #0052cc;
-            --primary-light: #0764f1;
-            --dark: #0a192f;
-            --dark-light: #172a45;
-            --accent: #00bfff;
-            --bg: #f8fafc;
-            --text: #334155;
-            --text-light: #94a3b8;
-            --white: #ffffff;
-            --glass: rgba(13, 29, 52, 0.9);
-            --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            --primary: #0052cc; --primary-light: #0764f1; --dark: #0a192f; --dark-light: #172a45;
+            --accent: #00bfff; --bg: #f8fafc; --text: #334155; --text-light: #94a3b8; --white: #ffffff;
+            --glass: rgba(13, 29, 52, 0.9); --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
             --gradient-accent: linear-gradient(135deg, #00bfff, #0052cc);
-            --gradient-orange: linear-gradient(135deg, #ff5000, #ff8c00);
         }
-        
         * { box-sizing: border-box; outline: none; }
-        html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-        
-        body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            margin: 0; padding: 0;
-            background-color: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-            overflow-x: hidden;
-        }
-
-        #scroll-progress {
-            position: fixed; top: 0; left: 0; width: 0%; height: 4px;
-            background: var(--gradient-accent);
-            z-index: 1000001; transition: width 0.1s;
-        }
-
-        /* --- ナビゲーションバー --- */
-        .navbar {
-            position: fixed; top: 0; left: 0; width: 100%;
-            background: var(--glass); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 1rem 2.5rem; z-index: 100000;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .nav-logo { color: var(--white); font-weight: 800; font-size: 1.2rem; cursor: pointer; text-decoration: none; }
-        
-        .nav-right { display: flex; align-items: center; gap: 2rem; }
-        .nav-links { display: flex; gap: 2rem; list-style: none; margin: 0; padding: 0; }
-        .nav-links a { color: var(--white); text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: var(--transition); opacity: 0.8; }
-        .nav-links a:hover { color: var(--accent); opacity: 1; }
-
-        /* ヘッダー */
-        header {
-            background: radial-gradient(circle at top right, var(--dark-light), var(--dark));
-            color: var(--white);
-            padding: 12rem 1.5rem 11rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        header h1 {
-            margin: 0; font-size: clamp(2.8rem, 10vw, 4.5rem); font-weight: 800;
-            background: linear-gradient(135deg, var(--white) 40%, var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* コンテンツ */
+        body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; background-color: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; }
+        #scroll-progress { position: fixed; top: 0; left: 0; width: 0%; height: 4px; background: var(--gradient-accent); z-index: 1000001; }
+        .navbar { position: fixed; top: 0; left: 0; width: 100%; background: var(--glass); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); display: flex; justify-content: space-between; align-items: center; padding: 1rem 2.5rem; z-index: 100000; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+        .nav-logo { color: var(--white); font-weight: 800; font-size: 1.2rem; text-decoration: none; }
+        header { background: radial-gradient(circle at top right, var(--dark-light), var(--dark)); color: var(--white); padding: 12rem 1.5rem 11rem; text-align: center; }
+        header h1 { margin: 0; font-size: clamp(2.8rem, 10vw, 4.5rem); font-weight: 800; background: linear-gradient(135deg, var(--white) 40%, var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .container { max-width: 900px; margin: -5rem auto 6rem; padding: 0 1.5rem; position: relative; z-index: 10; }
-        
-        /* ブログカードの追加スタイル */
         .blog-list { display: flex; flex-direction: column; gap: 2rem; }
-        .card {
-            background: var(--white); padding: 3rem; border-radius: 32px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
-            border: 1px solid rgba(226, 232, 240, 0.8); transition: var(--transition);
-            display: flex; flex-direction: column; gap: 1rem;
-        }
+        .card { background: var(--white); padding: 3rem; border-radius: 32px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08); border: 1px solid rgba(226, 232, 240, 0.8); transition: var(--transition); display: flex; flex-direction: column; gap: 1rem; }
         .card:hover { transform: translateY(-8px); border-color: var(--accent); }
-        
         .blog-date { color: var(--text-light); font-size: 0.9rem; font-weight: 600; }
         .blog-title { color: var(--dark); font-size: 1.75rem; margin: 0; font-weight: 800; }
         .blog-body { color: var(--text); font-size: 1.05rem; }
-        .blog-img { width: 100%; max-height: 400px; object-fit: cover; border-radius: 20px; margin-bottom: 0.5rem; }
-
-        footer { background-color: var(--dark); color: var(--text-light); padding: 6rem 1.5rem 10rem; text-align: center; }
-
-        @media (max-width: 900px) {
-            .nav-right { gap: 1rem; }
-            .nav-links { display: none; }
-        }
+        .blog-img { width: 100%; max-height: 400px; object-fit: cover; border-radius: 20px; }
+        footer { background-color: var(--dark); color: var(--text-light); padding: 4rem 1.5rem; text-align: center; }
     </style>
 </head>
 <body>
@@ -110,11 +39,6 @@
 
     <nav class="navbar">
         <a href="../" class="nav-logo">ryopc</a>
-        <div class="nav-right">
-            <ul class="nav-links">
-                <li><a href="../">Home</a></li>
-            </ul>
-        </div>
     </nav>
 
     <header>
@@ -122,7 +46,7 @@
     </header>
 
     <div class="container">
-        <!-- ここに Pages CMS で追加された記事が自動挿入されます -->
+        <!-- ここに自動で記事が追加されていきます -->
         <div id="blog-container" class="blog-list">
             <div class="card"><p style="text-align:center; color:var(--text-light);">記事を読み込んでいます...</p></div>
         </div>
@@ -132,50 +56,51 @@
         <p>&copy; 2026 ryopc Global Digital Support</p>
     </footer>
 
-    <!-- Pages CMSのJSONファイルを自動読み込みして組み立てるプログラム -->
     <script>
-        // スクロールプログレスバーの制御
+        // スクロールバーの動き
         window.addEventListener('scroll', () => {
             const winScroll = document.documentElement.scrollTop;
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = (winScroll / height) * 100;
-            document.getElementById('scroll-progress').style.width = scrolled + '%';
+            document.getElementById('scroll-progress').style.width = (winScroll / height) * 100 + '%';
         });
 
-        // 記事JSONを読み込む処理
+        // 【自動化コアシステム】GitHub API経由でblog内のJSONを自動全取得する仕組み
         async function loadBlogs() {
             const container = document.getElementById('blog-container');
             
-            try {
-                // 【設定項目】Pages CMSが生成するJSONファイルのリストをここに定義します
-                // 通常は静的サイトジェネレーターやビルドツールを使いますが、手動 Direct Upload の場合は
-                // 新しい記事ファイルを追加した際に、ここの配列にもファイル名（例: "2026-05-18-post.json"）を追記します。
-                const blogFiles = [
-                    // "2026-05-18-sample.json" // ←ここにPages CMSが吐き出したファイル名を追加していきます
-                ];
+            // 下記の3つをご自身の環境（GitHub）の情報に書き換えてください
+            const OWNER = "あなたのGitHubユーザー名";
+            const REPO  = "あなたのリポジトリ名";
+            const PATH  = "blog"; // 記事が入っているフォルダ名
 
-                if (blogFiles.length === 0) {
+            try {
+                // GitHubのフォルダ内にあるファイル一覧を自動取得
+                const response = await fetch(`https://github.com{OWNER}/${REPO}/contents/${PATH}`);
+                if (!response.ok) throw new Error('通信エラー');
+                const files = await response.json();
+
+                // JSONファイルだけを抽出（降順ソートで新しい順にする）
+                const jsonFiles = files
+                    .filter(file => file.name.endsWith('.json'))
+                    .sort((a, b) => b.name.localeCompare(a.name));
+
+                if (jsonFiles.length === 0) {
                     container.innerHTML = '<div class="card"><p style="text-align:center; color:var(--text-light);">まだ記事がありません。</p></div>';
                     return;
                 }
 
                 container.innerHTML = ''; // ローダー消去
 
-                // 全てのJSONデータを非同期で取得
-                for (const file of blogFiles) {
-                    const response = await fetch(`./${file}`);
-                    if (!response.ok) continue;
-                    const data = await response.json();
+                // 取得したJSONファイルを1つずつ読み込んでHTML化
+                for (const file of jsonFiles) {
+                    const postRes = await fetch(file.download_url);
+                    if (!postRes.ok) continue;
+                    const data = await postRes.json();
 
-                    // カード型HTMLの組み立て
                     const card = document.createElement('article');
                     card.className = 'card';
 
-                    // 画像がある場合のみ表示
-                    let imgHtml = '';
-                    if (data.image) {
-                        imgHtml = `<img src=".${data.image}" alt="${data.title}" class="blog-img">`;
-                    }
+                    let imgHtml = data.image ? `<img src="..${data.image}" alt="${data.title}" class="blog-img">` : '';
 
                     card.innerHTML = `
                         <div class="blog-date">${data.date || ''}</div>
@@ -186,12 +111,11 @@
                     container.appendChild(card);
                 }
             } catch (error) {
-                container.innerHTML = '<div class="card"><p style="text-align:center; color:red;">記事の読み込みに失敗しました。</p></div>';
+                container.innerHTML = '<div class="card"><p style="text-align:center; color:red;">記事の読み込みに失敗しました。GitHubの設定を確認してください。</p></div>';
                 console.error(error);
             }
         }
 
-        // ページ読み込み時に実行
         document.addEventListener('DOMContentLoaded', loadBlogs);
     </script>
 </body>
