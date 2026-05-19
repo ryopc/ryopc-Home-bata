@@ -155,7 +155,6 @@
             display: flex; align-items: center; justify-content: center; border: 2px solid var(--white);
         }
 
-        
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
 
         @media (max-width: 900px) {
@@ -203,24 +202,15 @@
     </header>
 
     <div class="container" id="contentContainer">
-        <!-- [ミッション] -->
         <section class="card" id="mission">
             <h2 data-t="mission_title">Our Mission</h2>
             <p data-t="mission_body">Led by <strong>ryopcCEO</strong>, ryopc is a digital-first global initiative. We believe that access to technology is a fundamental right, and fair, transparent support is essential to maintain it. We protect users from fraudulent support practices worldwide.</p>
         </section>
 
-        <!-- [サービス] -->
         <section class="card" id="services">
             <h2 data-t="services_title">Our Services</h2>
             <p data-t="services_body">We provide a multi-layered ecosystem including legitimate device guidance and digital literacy advocacy. We plan to sequentially launch diverse digital solutions to meet the evolving needs of the global community.</p>
         </section>
-
-        <!-- [ここから新しい内容を追加できます]
-        <section class="card" id="new-section">
-            <h2 data-t="new_title">New Section Title</h2>
-            <p data-t="new_body">New content description here...</p>
-        </section>
-        -->
 
         <a href="/docs" class="docs-link-button">
             <span data-t="btn_docs">View Project Documentation</span> <span>➔</span>
@@ -255,14 +245,9 @@
     </footer>
 
     <script>
-    // --- 翻訳データ ---
-    // カンマ（,）の不足により発生していた構文エラーをすべて修正しました。
     const translations = {
         ja: {
-            nav_home: "ホーム",
-            nav_mission: "ミッション",
-            nav_services: "サービス",
-            nav_docs: "ドキュメント",
+            nav_home: "ホーム", nav_mission: "ミッション", nav_services: "サービス", nav_docs: "ドキュメント",
             hero_title: "ryopc org",
             hero_desc: "世界中の誰もが、デジタルデバイスの正当なサポートを受けられる社会を目指します。",
             mission_title: "私たちのミッション",
@@ -271,17 +256,11 @@
             services_body: "正当なデバイスガイダンスやデジタルリテラシーの提唱を含む、多層的なエコシステムを提供します。グローバルコミュニティの進化するニーズに応えるため、多様なデジタルソリューションを順次展開していく予定です。",
             btn_docs: "プロジェクトドキュメントを見る",
             cookie_text: "<strong>クッキーの使用について</strong><br>このサイトでは、チャットサポートの提供や体験向上のためにクッキーを使用します。同意することで、サポートサービスを利用できるようになります。",
-            cookie_accept: "同意して利用開始",
-            cookie_deny: "拒否",
-            chat_btn: "チャットサポート",
-            status_text: "ステータス: Open Source Collective (米国カリフォルニア州) への申請中",
-            nav_note: "ブログ"
+            cookie_accept: "同意して利用開始", cookie_deny: "拒否", chat_btn: "チャットサポート",
+            status_text: "ステータス: Open Source Collective (米国カリフォルニア州) への申請中", nav_note: "ブログ"
         },
         en: {
-            nav_home: "Home",
-            nav_mission: "Mission",
-            nav_services: "Services",
-            nav_docs: "Docs",
+            nav_home: "Home", nav_mission: "Mission", nav_services: "Services", nav_docs: "Docs",
             hero_title: "ryopc org",
             hero_desc: "Ensuring everyone, everywhere, has access to legitimate support for digital devices.",
             mission_title: "Our Mission",
@@ -290,17 +269,11 @@
             services_body: "We provide a multi-layered ecosystem including legitimate device guidance and digital literacy advocacy. We plan to sequentially launch diverse digital solutions to meet the evolving needs of the global community.",
             btn_docs: "View Project Documentation",
             cookie_text: "<strong>About the Use of Cookies</strong><br>This site uses cookies to provide chat support and improve your experience. By agreeing, you can use our chat service.",
-            cookie_accept: "Accept",
-            cookie_deny: "Deny",
-            chat_btn: "Chat Support",
-            status_text: "Status: Under application for Open Source Collective (Covina, CA, USA)",
-            nav_note: "blog"
+            cookie_accept: "Accept", cookie_deny: "Deny", chat_btn: "Chat Support",
+            status_text: "Status: Under application for Open Source Collective (Covina, CA, USA)", nav_note: "blog"
         },
         pt: {
-            nav_home: "Início",
-            nav_mission: "Missão",
-            nav_services: "Serviços",
-            nav_docs: "Docs",
+            nav_home: "Início", nav_mission: "Missão", nav_services: "Serviços", nav_docs: "Docs",
             hero_title: "ryopc org",
             hero_desc: "Garantindo que todos, em todos os lugares, tenham acesso a suporte legítimo para dispositivos digitais.",
             mission_title: "Nossa Missão",
@@ -309,19 +282,14 @@
             services_body: "Oferecemos um ecossistema multifacetado que inclui orientação legítima de dispositivos e defesa da alfabetização digital. Planejamos lançar sequencialmente diversas soluções digitais para atender às necessidades da comunidade global.",
             btn_docs: "Ver Documentação do Projeto",
             cookie_text: "<strong>Sobre o uso de cookies</strong><br>Este site usa cookies para fornecer suporte por chat e melhorar sua experiência. Ao concordar, você poderá usar nosso serviço de chat.",
-            cookie_accept: "Aceitar",
-            cookie_deny: "Recusar",
-            chat_btn: "Suporte por Chat",
-            status_text: "Status: Em processo de candidatura para Open Source Collective (Covina, CA, EUA)",
-            nav_note: "Blog"
+            cookie_accept: "Aceitar", cookie_deny: "Recusar", chat_btn: "Suporte por Chat",
+            status_text: "Status: Em processo de candidatura para Open Source Collective (Covina, CA, EUA)", nav_note: "Blog"
         }
     };
 
-    // --- 言語切り替え機能 ---
     function changeLanguage(lang) {
         document.documentElement.lang = lang;
         safeStorage.set("preferred_lang", lang);
-        
         document.querySelectorAll('[data-t]').forEach(el => {
             const key = el.getAttribute('data-t');
             if (translations[lang] && translations[lang][key]) {
@@ -330,31 +298,27 @@
         });
     }
 
-    // --- セーフストレージ ---
     const safeStorage = {
         get: (key) => { try { return localStorage.getItem(key); } catch (e) { return window['fb_' + key] || null; } },
         set: (key, val) => { try { localStorage.setItem(key, val); } catch (e) { window['fb_' + key] = val; } }
     };
 
-    // --- Channel Talk ---
-    (function() {
-        var w = window; if (w.ChannelIO) return;
-        var ch = function() { ch.c(arguments); }; ch.q = []; ch.c = function(args) { ch.q.push(args); }; w.ChannelIO = ch;
-        function l() {
-            if (w.ChannelIOInitialized) return; w.ChannelIOInitialized = true;
-            var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = 'https://cdn.channel.io/plugin/ch-plugin-web.js';
-            var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x);
-        }
-        if (document.readyState === 'complete') l(); else { w.addEventListener('load', l); }
-    })();
-
+    // --- Cloudflare Zaraz との連携を最適化 ---
     function chInitTalk() {
-        ChannelIO('boot', { "pluginKey": 'f06bb3b5-5394-4b24-b902-03d4110cfddd' }, () => initMobileChatButton());
+        // Channel Talkが準備できたらオリジナルボタンを表示
+        if (typeof ChannelIO === 'function') {
+            initMobileChatButton();
+        }
     }
 
     function chAcceptCookie() {
         safeStorage.set("ch_cookie_consent", "accepted");
         document.getElementById("chCookieBanner").classList.add("ch-hidden");
+        
+        // Zarazにクッキー同意を通知するイベントを送信
+        if (typeof zaraz !== 'undefined' && zaraz.track) {
+            zaraz.track("cookie_consent_accepted");
+        }
         chInitTalk();
     }
 
@@ -365,7 +329,7 @@
 
     function initMobileChatButton() {
         const container = document.getElementById('special-mobile-chat-container');
-        if (safeStorage.get("ch_cookie_consent") === "accepted") {
+        if (safeStorage.get("ch_cookie_consent") === "accepted" && typeof ChannelIO === 'function') {
             container.style.display = 'block';
             ChannelIO('hideChannelButton');
             document.getElementById('special-mobile-chat-btn').onclick = () => ChannelIO('showMessenger');
@@ -373,7 +337,6 @@
         }
     }
 
-    // --- 初期化 ---
     window.addEventListener('DOMContentLoaded', () => {
         const savedLang = safeStorage.get("preferred_lang");
         const browserLang = navigator.language.split('-')[0];
@@ -388,8 +351,12 @@
         document.onclick = () => navLinks.classList.remove('active');
 
         const consent = safeStorage.get("ch_cookie_consent");
-        if (consent === "accepted") chInitTalk();
-        else if (consent === null) setTimeout(() => document.getElementById("chCookieBanner").classList.remove("ch-hidden"), 1200);
+        if (consent === "accepted") {
+            // Zaraz経由のスクリプト読み込み完了を少し待ってから初期化
+            setTimeout(chInitTalk, 1000);
+        } else if (consent === null) {
+            setTimeout(() => document.getElementById("chCookieBanner").classList.remove("ch-hidden"), 1200);
+        }
 
         window.onscroll = () => {
             const winScroll = document.documentElement.scrollTop;
