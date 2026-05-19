@@ -13,9 +13,7 @@ We are developing a borderless, multi-layered ecosystem starting with legitimate
 ---
 
 ## 🌐 Project Status
-* **Administrative Base:** Under application for **Open Source Collective** (Covina, CA, USA)
 * **Live Chat Support:** Powered by **Channel Talk** (Integrated)
-* **Official Domain:** `ryopc.org` (Pending acquisition via Free For Charity)
 
 ---
 *“Ensuring global digital equity, one device at a time.” — ryopcCEO*
