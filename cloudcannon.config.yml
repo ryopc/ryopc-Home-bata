@@ -16,7 +16,7 @@ collections_config:
     schemas:
       default:
         path: ''
-        target_path: 'blog/articles/{slug}.html'
+        target_path: 'blog/articles/{slug}/index.html'
     _defaults:
       blog:
         tags: blog # 👈 自動でEleventy用に「blog」タグが裏で付きます
@@ -39,7 +39,7 @@ collections_config:
         required: true
 
       - name: image
-        label: アイキャッチ��像（URL）
+        label: アイキャッチ画像（URL）
         type: image
 
       - name: tags
