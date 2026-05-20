@@ -11,79 +11,37 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link rel="stylesheet" id="silktide-consent-manager-css" href="https://cdn.jsdelivr.net/gh/silktide/consent-manager@v2.0.0/silktide-consent-manager.css" integrity="sha384-IO1E/jCrQXyH5rwcI0SXP7OXw47JFqQNDQcKhbFvqnL2IunBxxwE2Ne5XyAmCqKs" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/gh/silktide/consent-manager@v2.0.0/silktide-consent-manager.js" integrity="sha384-j4NIMOecmtzMWe9GJADIIe5hTlHG63aiTQ/2XorW10RNyQJg+IU+xwFVDy45wBah" crossorigin="anonymous"></script>
-<script>
-window.silktideConsentManager.init({
-  backdrop: {
-    show: true
-  },
-  icon: {
-    position: "bottomLeft"
-  },
-  prompt: {
-    position: "bottomRight"
-  },
-  consentTypes: [
-    {
-      id: "essential",
-      label: "Essential",
-      description: "<p>These cookies are necessary for the website to function properly and cannot be switched off. They help with things like logging in and setting your privacy preferences.</p>",
-      required: true,
-      onAccept: function() {
-        console.log('Add logic for the required Essential consent type here');
-      }
-    },
-    {
-      id: "analytics",
-      label: "Analytics",
-      description: "<p>These cookies help us improve the site by tracking which pages are most popular and how visitors move around the site.</p>",
-      required: false,
-      onAccept: function() {
-        console.log('Add accept logic for Analytics consent type here');
-      },
-      onReject: function() {
-        console.log('Add reject logic for Analytics consent type here');
-      }
-    },
-    {
-      id: "customer_support",
-      label: "Customer Support",
-      description: "<p>This cookie helps us provide you with the best possible support.</p>",
-      required: false,
-      scripts: [
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="stylesheet" id="silktide-consent-manager-css" href="https://cdn.jsdelivr.net/gh/silktide/consent-manager@v2.0.0/silktide-consent-manager.css" integrity="sha384-IO1E/jCrQXyH5rwcI0SXP7OXw47JF1KBvYhzILKXBvFt/Q5WaVJ/bT6E3n1SIFm7" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/gh/silktide/consent-manager@v2.0.0/silktide-consent-manager.js" integrity="sha384-j4NIMOecmtzMWe9GJADIIe5hTlHG63aiTQ/2XorW10RNyQJg+IU+xwFVDy45wBah" crossorigin="anonymous"></script>
+    <script>
+    window.silktideConsentManager.init({
+      backdrop: { show: true },
+      icon: { position: "bottomLeft" },
+      prompt: { position: "bottomRight" },
+      consentTypes: [
         {
-          url: "https://rawcdn.githack.com/ryopc/Archive/fc3acd1142e5108dc5263e4b112a768988cccb4d/Channel-Talk.js",
-          load: "async"
+          id: "essential",
+          label: "Essential",
+          description: "<p>These cookies are necessary for the website to function properly and cannot be switched off.</p>",
+          required: true
+        },
+        {
+          id: "analytics",
+          label: "Analytics",
+          description: "<p>These cookies help us improve the site by tracking which pages are most popular.</p>",
+          required: false
         }
       ],
-      onAccept: function() {
-        // Custom script loaded: https://rawcdn.githack.com/ryopc/Archive/fc3acd1142e5108dc5263e4b112a768988cccb4d/Channel-Talk.js
+      text: {
+        prompt: {
+          description: "<p>This site uses cookies to improve user experience and provide support.</p>",
+          acceptAllButtonText: "Accept all",
+          rejectNonEssentialButtonText: "Reject non-essential"
+        }
       }
-    }
-  ],
-  text: {
-    prompt: {
-      description: "<p>This site uses cookies to improve the user experience, provide personalized content, and analyze traffic.</p>",
-      acceptAllButtonText: "Accept all",
-      acceptAllButtonAccessibleLabel: "Accept all cookies",
-      rejectNonEssentialButtonText: "Reject non-essential",
-      rejectNonEssentialButtonAccessibleLabel: "Reject all non-essential cookies",
-      preferencesButtonText: "Preferences",
-      preferencesButtonAccessibleLabel: "Toggle preferences"
-    },
-    preferences: {
-      title: "Customize your cookie preferences",
-      description: "<p>We respect your right to privacy. You can choose not to allow some types of cookies. Your cookie preferences will apply across our website.</p>",
-      saveButtonText: "Save and close",
-      saveButtonAccessibleLabel: "Save your cookie preferences",
-      creditLinkText: "Get this banner for free",
-      creditLinkAccessibleLabel: "Get this banner for free"
-    }
-  }
-});
-</script>
+    });
+    </script>
     <style>
         :root {
             --primary: #0052cc;
@@ -120,7 +78,6 @@ window.silktideConsentManager.init({
             z-index: 1000001; transition: width 0.1s;
         }
 
-        /* --- ナビゲーションバー --- */
         .navbar {
             position: fixed; top: 0; left: 0; width: 100%;
             background: var(--glass); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
@@ -135,7 +92,6 @@ window.silktideConsentManager.init({
         .nav-links a { color: var(--white); text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: var(--transition); opacity: 0.8; }
         .nav-links a:hover { color: var(--accent); opacity: 1; }
 
-        /* 言語セレクター */
         .lang-selector {
             background: rgba(255, 255, 255, 0.1);
             color: var(--white);
@@ -153,7 +109,6 @@ window.silktideConsentManager.init({
         .menu-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 5px; }
         .menu-toggle span { display: block; width: 22px; height: 2px; background: var(--white); border-radius: 2px; transition: var(--transition); }
 
-        /* ヘッダー */
         header {
             background: radial-gradient(circle at top right, var(--dark-light), var(--dark));
             color: var(--white);
@@ -175,7 +130,6 @@ window.silktideConsentManager.init({
             color: var(--text-light); opacity: 0.9;
         }
 
-        /* コンテンツ */
         .container { max-width: 900px; margin: -5rem auto 6rem; padding: 0 1.5rem; position: relative; z-index: 10; }
         .card {
             background: var(--white); padding: 3rem; border-radius: 32px;
@@ -202,7 +156,6 @@ window.silktideConsentManager.init({
         }
         .status-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 10px var(--accent); animation: pulse 2s infinite; }
 
-        /* クッキーバナー */
         .ch-cookie-banner {
             position: fixed; bottom: 32px; left: 32px; right: 32px;
             background: var(--glass); backdrop-filter: blur(15px); color: var(--white);
@@ -215,7 +168,6 @@ window.silktideConsentManager.init({
         .ch-btn-accept { background: var(--primary); color: var(--white); }
         .ch-btn-deny { background: rgba(255, 255, 255, 0.1); color: var(--white); }
 
-        /* チャットボタン */
         #special-mobile-chat-container { display: none; position: fixed; bottom: 32px; right: 32px; z-index: 99999; }
         #special-mobile-chat-btn {
             display: flex; align-items: center; gap: 10px; padding: 16px 28px;
@@ -228,7 +180,6 @@ window.silktideConsentManager.init({
             display: flex; align-items: center; justify-content: center; border: 2px solid var(--white);
         }
 
-        
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
 
         @media (max-width: 900px) {
@@ -265,7 +216,7 @@ window.silktideConsentManager.init({
                 <li><a href="/blog/articles/game-ryo/" data-t="About-the-Operator">運営者について</a></li>
                 <li><a href="#mission" data-t="nav_mission">ミッション</a></li>
                 <li><a href="#services" data-t="nav_services">サービス</a></li>
-                <li><a href="/blog" data-t="nav_note">note</a></li>
+                <li><a href="/blog" data-t="nav_note">ブログ</a></li>
                 <li><a href="/docs" data-t="nav_docs">ドキュメント</a></li>
             </ul>
         </div>
@@ -277,24 +228,15 @@ window.silktideConsentManager.init({
     </header>
 
     <div class="container" id="contentContainer">
-        <!-- [ミッション] -->
         <section class="card" id="mission">
             <h2 data-t="mission_title">Our Mission</h2>
-            <p data-t="mission_body">Led by <strong>ryopcCEO</strong>, ryopc is a digital-first global initiative. We believe that access to technology is a fundamental right, and fair, transparent support is essential to maintain it. We protect users from fraudulent support practices worldwide.</p>
+            <p data-t="mission_body">Led by <strong>ryopcCEO</strong>, ryopc is a digital-first global initiative. We believe that access to technology is a fundamental right, and fair, transparent support is essential to maintaining digital sovereignty worldwide.</p>
         </section>
 
-        <!-- [サービス] -->
         <section class="card" id="services">
             <h2 data-t="services_title">Our Services</h2>
-            <p data-t="services_body">We provide a multi-layered ecosystem including legitimate device guidance and digital literacy advocacy. We plan to sequentially launch diverse digital solutions to meet the evolving needs of the global community.</p>
+            <p data-t="services_body">We provide a multi-layered ecosystem including legitimate device guidance and digital literacy advocacy. We plan to sequentially launch diverse digital solutions tailored to community needs.</p>
         </section>
-
-        <!-- [ここから新しい内容を追加できます]
-        <section class="card" id="new-section">
-            <h2 data-t="new_title">New Section Title</h2>
-            <p data-t="new_body">New content description here...</p>
-        </section>
-        -->
 
         <a href="/docs" class="docs-link-button">
             <span data-t="btn_docs">View Project Documentation</span> <span>➔</span>
@@ -314,7 +256,7 @@ window.silktideConsentManager.init({
 
     <div id="special-mobile-chat-container">
         <button id="special-mobile-chat-btn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-top: 1px;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
             <span data-t="chat_btn">Chat Support</span>
         </button>
         <span id="special-mobile-close-btn">×</span>
@@ -329,8 +271,6 @@ window.silktideConsentManager.init({
     </footer>
 
     <script>
-    // --- 翻訳データ ---
-    // カンマ（,）の不足により発生していた構文エラーをすべて修正しました。
     const translations = {
         ja: {
             nav_home: "ホーム",
@@ -338,19 +278,19 @@ window.silktideConsentManager.init({
             nav_services: "サービス",
             About-the-Operator: "運営者について",
             nav_docs: "ドキュメント",
+            nav_note: "ブログ",
             hero_title: "ryopc org",
             hero_desc: "世界中の誰もが、デジタルデバイスの正当なサポートを受けられる社会を目指します。",
             mission_title: "私たちのミッション",
-            mission_body: "ryopCEO率いるryopcは、デジタル優先のグローバルな取り組みです。私たちはテクノロジーへのアクセスが基本的人権であると信じており、それを維持するためには公平で透明性のあるサポートが不可欠です。世界中の不正なサポート行為からユーザーを保護します。",
+            mission_body: "ryopCEO率いるryopcは、デジタル優先のグローバルな取り組みです。私たちはテクノロジーへのアクセスが基本的人権であると信じ、世界中でのデジタル主権を維持するために、公正で透明性のあるサポートが不可欠であると考えています。",
             services_title: "提供するサービス",
-            services_body: "正当なデバイスガイダンスやデジタルリテラシーの提唱を含む、多層的なエコシステムを提供します。グローバルコミュニティの進化するニーズに応えるため、多様なデジタルソリューションを順次展開していく予定です。",
+            services_body: "正当なデバイスガイダンスやデジタルリテラシーの提唱を含む、多層的なエコシステムを提供します。コミュニティのニーズに合わせた多様なデジタルソリューションの段階的な展開を計画しています。",
             btn_docs: "プロジェクトドキュメントを見る",
-            cookie_text: "<strong>クッキーの使用について</strong><br>このサイトでは、チャットサポートの提供や体験向上のためにクッキーを使用します。同意することで、サポートサービスを利用できるようになります。",
+            cookie_text: "<strong>クッキーの使用について</strong><br>このサイトでは、チャットサポートの提供や体験向上のためにクッキーを使用します。同意することで、当サイトのチャットサポートサービスをご利用いただけます。",
             cookie_accept: "同意して利用開始",
             cookie_deny: "拒否",
             chat_btn: "チャットサポート",
-            status_text: "ステータス: Open Source Collective (米国カリフォルニア州) への申請中",
-            nav_note: "ブログ"
+            status_text: "ステータス: Open Source Collective (米国カリフォルニア州) への申請中"
         },
         en: {
             nav_home: "Home",
@@ -358,47 +298,45 @@ window.silktideConsentManager.init({
             nav_services: "Services",
             About-the-Operator: "About the Operator",
             nav_docs: "Docs",
+            nav_note: "Blog",
             hero_title: "ryopc org",
             hero_desc: "Ensuring everyone, everywhere, has access to legitimate support for digital devices.",
             mission_title: "Our Mission",
-            mission_body: "Led by ryopcCEO, ryopc is a digital-first global initiative. We believe that access to technology is a fundamental right, and fair, transparent support is essential to maintain it. We protect users from fraudulent support practices worldwide.",
+            mission_body: "Led by ryopcCEO, ryopc is a digital-first global initiative. We believe that access to technology is a fundamental right, and fair, transparent support is essential to maintaining digital sovereignty worldwide.",
             services_title: "Our Services",
-            services_body: "We provide a multi-layered ecosystem including legitimate device guidance and digital literacy advocacy. We plan to sequentially launch diverse digital solutions to meet the evolving needs of the global community.",
+            services_body: "We provide a multi-layered ecosystem including legitimate device guidance and digital literacy advocacy. We plan to sequentially launch diverse digital solutions tailored to community needs.",
             btn_docs: "View Project Documentation",
             cookie_text: "<strong>About the Use of Cookies</strong><br>This site uses cookies to provide chat support and improve your experience. By agreeing, you can use our chat service.",
             cookie_accept: "Accept",
             cookie_deny: "Deny",
             chat_btn: "Chat Support",
-            status_text: "Status: Under application for Open Source Collective (Covina, CA, USA)",
-            nav_note: "blog"
+            status_text: "Status: Under application for Open Source Collective (Covina, CA, USA)"
         },
         pt: {
             nav_home: "Início",
             nav_mission: "Missão",
             nav_services: "Serviços",
-            About-the-Operator: "O operatorze",
+            About-the-Operator: "Sobre o Operador",
             nav_docs: "Docs",
+            nav_note: "Blog",
             hero_title: "ryopc org",
             hero_desc: "Garantindo que todos, em todos os lugares, tenham acesso a suporte legítimo para dispositivos digitais.",
             mission_title: "Nossa Missão",
-            mission_body: "Liderada por ryopcCEO, a ryopc é uma iniciativa global focada no digital. Acreditamos que o acesso à tecnologia é um direito fundamental, e o suporte justo e transparente é essencial para mantê-lo. Protegemos os usuários de práticas de suporte fraudulentas em todo o mundo.",
+            mission_body: "Liderada por ryopcCEO, a ryopc é uma iniciativa global focada no digital. Acreditamos que o acesso à tecnologia é um direito fundamental, e o suporte justo e transparente é essencial para manter a soberania digital em todo o mundo.",
             services_title: "Nossos Serviços",
-            services_body: "Oferecemos um ecossistema multifacetado que inclui orientação legítima de dispositivos e defesa da alfabetização digital. Planejamos lançar sequencialmente diversas soluções digitais para atender às necessidades da comunidade global.",
+            services_body: "Oferecemos um ecossistema multifacetado que inclui orientação legítima de dispositivos e defesa da alfabetização digital. Planejamos lançar sequencialmente diversas soluções digitais adaptadas às necessidades da comunidade.",
             btn_docs: "Ver Documentação do Projeto",
             cookie_text: "<strong>Sobre o uso de cookies</strong><br>Este site usa cookies para fornecer suporte por chat e melhorar sua experiência. Ao concordar, você poderá usar nosso serviço de chat.",
             cookie_accept: "Aceitar",
             cookie_deny: "Recusar",
             chat_btn: "Suporte por Chat",
-            status_text: "Status: Em processo de candidatura para Open Source Collective (Covina, CA, EUA)",
-            nav_note: "Blog"
+            status_text: "Status: Em processo de candidatura para Open Source Collective (Covina, CA, EUA)"
         }
     };
 
-    // --- 言語切り替え機能 ---
     function changeLanguage(lang) {
         document.documentElement.lang = lang;
         safeStorage.set("preferred_lang", lang);
-        
         document.querySelectorAll('[data-t]').forEach(el => {
             const key = el.getAttribute('data-t');
             if (translations[lang] && translations[lang][key]) {
@@ -407,13 +345,17 @@ window.silktideConsentManager.init({
         });
     }
 
-    // --- セーフストレージ ---
     const safeStorage = {
         get: (key) => { try { return localStorage.getItem(key); } catch (e) { return window['fb_' + key] || null; } },
         set: (key, val) => { try { localStorage.setItem(key, val); } catch (e) { window['fb_' + key] = val; } }
     };
 
- 
+    window.onscroll = () => {
+        const winScroll = document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        document.getElementById("scroll-progress").style.width = scrolled + "%";
+    };
     </script>
 </body>
 </html>
