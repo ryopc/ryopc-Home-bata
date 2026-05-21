@@ -251,7 +251,7 @@
 
             <p class="login-text">
                 すでにアカウントがありますか？  
-                <a href="/login.html">ログインはこちら</a>
+                <a href="/login/">ログインはこちら</a>
             </p>
         </div>
     </div>
@@ -276,7 +276,7 @@ document.getElementById("register-form").addEventListener("submit", async (e) =>
     const json = await res.json();
 
     if (json.success) {
-        window.location.href = "/dashboard.html";
+        window.location.href = "/dashboard/";
     } else {
         alert(JSON.stringify(json));
     }
