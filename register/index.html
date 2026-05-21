@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新規登録 - ryopc</title>
+
+    <link rel="stylesheet" href="/style.css">
+
+    <style>
+        .auth-wrapper {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            background: var(--bg);
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 480px;
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 32px;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.12);
+            border: 1px solid rgba(226,232,240,0.8);
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .auth-card h2 {
+            margin-top: 0;
+            margin-bottom: 2rem;
+            font-size: 1.9rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .auth-card h2::before {
+            content: "";
+            width: 6px;
+            height: 28px;
+            background: var(--gradient-accent);
+            border-radius: 10px;
+        }
+
+        /* OAuth ボタン共通 */
+        .oauth-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .oauth-btn-wrapper {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 0.8rem 1rem;
+            border: 1px solid rgba(0,0,0,0.08);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .oauth-btn-wrapper:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+        }
+
+        .oauth-btn-wrapper img {
+            width: 100%;
+            display: block;
+        }
+
+        /* GitHub ボタン（文字入り） */
+        .github-login-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            max-width: 320px;
+            margin: 0 auto;
+            padding: 0.9rem 1.2rem;
+            background: #24292e;
+            border-radius: 16px;
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: var(--transition);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+        }
+        .github-login-btn img {
+            height: 26px;
+            width: 26px;
+        }
+        .github-login-btn:hover {
+            filter: brightness(1.1);
+            transform: translateY(-3px);
+        }
+        .github-login-btn:active {
+            filter: brightness(1.2);
+            transform: translateY(0px);
+        }
+
+        .divider {
+            text-align: center;
+            margin: 2rem 0;
+            position: relative;
+        }
+        .divider span {
+            background: var(--white);
+            padding: 0 1rem;
+            color: var(--text-light);
+            font-weight: 600;
+        }
+        .divider::before {
+            content: "";
+            position: absolute;
+            top: 50%; left: 0; right: 0;
+            height: 1px;
+            background: rgba(0,0,0,0.1);
+        }
+
+        .register-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 14px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .register-btn:hover {
+            background: var(--primary-light);
+            transform: translateY(-3px);
+        }
+
+        .login-text {
+            margin-top: 1.5rem;
+            text-align: center;
+            color: var(--text-light);
+        }
+        .login-text a {
+            color: var(--primary);
+            font-weight: 700;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="navbar">
+        <div class="nav-logo" onclick="location.href='/'">ryopc</div>
+    </div>
+
+    <div class="auth-wrapper">
+        <div class="auth-card">
+            <h2>新規登録</h2>
+
+            <div class="oauth-buttons">
+
+                <!-- Google 公式ボタン -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <div id="g_id_onload"
+        data-client_id="744662410553-97fp8oh13pp62u48isr5ful9297nkaon.apps.googleusercontent.com"
+        data-login_uri="https://auth.ryopc.f5.si/login"
+        data-auto_prompt="false">
+    </div>
+    <div class="g_id_signin"
+        data-type="standard"
+        data-size="large"
+        data-theme="outline"
+        data-text="signin_with"
+        data-shape="rectangular"
+        data-logo_alignment="left">
+    </div>
+                <!-- GitHub（あなたのロゴ＋文字入り） -->
+                <a href="https://auth.ryopc.f5.si/login/github" class="github-login-btn">
+                    <img src="https://res.cloudinary.com/dt0zmgv8k/image/upload/v1779401761/GitHub_Invertocat_Black_oaz8ko.svg">
+                    <span>Sign up with GitHub</span>
+                </a>
+
+                <!-- LINE（あなたの公式画像） -->
+                <div class="oauth-btn-wrapper" onclick="location.href='https://auth.ryopc.f5.si/login/line'">
+                    <img src="https://res.cloudinary.com/dt0zmgv8k/image/upload/v1779401678/btn_login_base_hjy4gn.png">
+                </div>
+
+            </div>
+
+            <div class="divider"><span>または</span></div>
+
+            <form id="register-form">
+                <div class="form-group">
+                    <label>名前</label>
+                    <input type="text" name="name" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label>メールアドレス</label>
+                    <input type="email" name="email" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label>パスワード</label>
+                    <input type="password" name="password" class="form-control" required>
+                </div>
+
+                <button type="submit" class="register-btn">新規登録</button>
+            </form>
+
+            <p class="login-text">
+                すでにアカウントがありますか？  
+                <a href="/login.html">ログインはこちら</a>
+            </p>
+        </div>
+    </div>
+
+<script>
+document.getElementById("register-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const form = new FormData(e.target);
+
+    const res = await fetch("https://auth.ryopc.f5.si/register/password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            name: form.get("name"),
+            email: form.get("email"),
+            password: form.get("password")
+        }),
+        credentials: "include"
+    });
+
+    const json = await res.json();
+
+    if (json.success) {
+        // 登録成功 → /me を確認してダッシュボードへ
+        const me = await fetch("https://auth.ryopc.f5.si/me", {
+            credentials: "include"
+        });
+
+        if (me.ok) {
+            window.location.href = "/dashboard.html";
+        }
+    } else {
+        alert(JSON.stringify(json));
+    }
+});
+</script>
+
+</body>
+</html>
