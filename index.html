@@ -11,79 +11,79 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link rel="stylesheet" id="silktide-consent-manager-css" href="https://cdn.jsdelivr.net/gh/silktide/consent-manager@v2.0.0/silktide-consent-manager.css" integrity="sha384-IO1E/jCrQXyH5rwcI0SXP7OXw47JFqQNDQcKhbFvqnL2IunBxxwE2Ne5XyAmCqKs" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/gh/silktide/consent-manager@v2.0.0/silktide-consent-manager.js" integrity="sha384-j4NIMOecmtzMWe9GJADIIe5hTlHG63aiTQ/2XorW10RNyQJg+IU+xwFVDy45wBah" crossorigin="anonymous"></script>
-<script>
-window.silktideConsentManager.init({
-  backdrop: {
-    show: true
-  },
-  icon: {
-    position: "bottomLeft"
-  },
-  prompt: {
-    position: "bottomRight"
-  },
-  consentTypes: [
-    {
-      id: "essential",
-      label: "Essential",
-      description: "<p>These cookies are necessary for the website to function properly and cannot be switched off. They help with things like logging in and setting your privacy preferences.</p>",
-      required: true,
-      onAccept: function() {
-        console.log('Add logic for the required Essential consent type here');
-      }
-    },
-    {
-      id: "analytics",
-      label: "Analytics",
-      description: "<p>These cookies help us improve the site by tracking which pages are most popular and how visitors move around the site.</p>",
-      required: false,
-      onAccept: function() {
-        console.log('Add accept logic for Analytics consent type here');
-      },
-      onReject: function() {
-        console.log('Add reject logic for Analytics consent type here');
-      }
-    },
-    {
-      id: "customer_support",
-      label: "Customer Support",
-      description: "<p>This cookie helps us provide you with the best possible support.</p>",
-      required: false,
-      scripts: [
-        {
-          url: "https://rawcdn.githack.com/ryopc/Archive/fc3acd1142e5108dc5263e4b112a768988cccb4d/Channel-Talk.js",
-          load: "async"
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="stylesheet" id="silktide-consent-manager-css" href="https://cdn.jsdelivr.net/gh/silktide/consent-manager@v2.0.0/silktide-consent-manager.css" xintegrity="sha384-IO1E/jCrQXyH5rwcI0SXP7OXw47JFqQNDQcKhbFvqnL2IunBxxwE2Ne5XyAmCqKs" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/gh/silktide/consent-manager@v2.0.0/silktide-consent-manager.js" xintegrity="sha384-j4NIMOecmtzMWe9GJADIIe5hTlHG63aiTQ/2XorW10RNyQJg+IU+xwFVDy45wBah" crossorigin="anonymous"></script>
+    <script>
+    window.silktideConsentManager.init({
+        backdrop: {
+            show: true
+        },
+        icon: {
+            position: "bottomLeft"
+        },
+        prompt: {
+            position: "bottomRight"
+        },
+        consentTypes: [
+            {
+                id: "essential",
+                label: "Essential",
+                description: "<p>These cookies are necessary for the website to function properly and cannot be switched off. They help with things like logging in and setting your privacy preferences.</p>",
+                required: true,
+                onAccept: function() {
+                    console.log('Add logic for the required Essential consent type here');
+                }
+            },
+            {
+                id: "analytics",
+                label: "Analytics",
+                description: "<p>These cookies help us improve the site by tracking which pages are most popular and how visitors move around the site.</p>",
+                required: false,
+                onAccept: function() {
+                    console.log('Add accept logic for Analytics consent type here');
+                },
+                onReject: function() {
+                    console.log('Add reject logic for Analytics consent type here');
+                }
+            },
+            {
+                id: "customer_support",
+                label: "Customer Support",
+                description: "<p>This cookie helps us provide you with the best possible support.</p>",
+                required: false,
+                scripts: [
+                    {
+                        url: "https://rawcdn.githack.com/ryopc/Archive/fc3acd1142e5108dc5263e4b112a768988cccb4d/Channel-Talk.js",
+                        load: "async"
+                    }
+                ],
+                onAccept: function() {
+                    // Custom script loaded: https://rawcdn.githack.com/ryopc/Archive/fc3acd1142e5108dc5263e4b112a768988cccb4d/Channel-Talk.js
+                }
+            }
+        ],
+        text: {
+            prompt: {
+                description: "<p>This site uses cookies to improve the user experience, provide personalized content, and analyze traffic.</p>",
+                acceptAllButtonText: "Accept all",
+                acceptAllButtonAccessibleLabel: "Accept all cookies",
+                rejectNonEssentialButtonText: "Reject non-essential",
+                rejectNonEssentialButtonAccessibleLabel: "Reject all non-essential cookies",
+                preferencesButtonText: "Preferences",
+                preferencesButtonAccessibleLabel: "Toggle preferences"
+            },
+            preferences: {
+                title: "Customize your cookie preferences",
+                description: "<p>We respect your right to privacy. You can choose not to allow some types of cookies. Your cookie preferences will apply across our website.</p>",
+                saveButtonText: "Save and close",
+                saveButtonAccessibleLabel: "Save your cookie preferences",
+                creditLinkText: "Get this banner for free",
+                creditLinkAccessibleLabel: "Get this banner for free"
+            }
         }
-      ],
-      onAccept: function() {
-        // Custom script loaded: https://rawcdn.githack.com/ryopc/Archive/fc3acd1142e5108dc5263e4b112a768988cccb4d/Channel-Talk.js
-      }
-    }
-  ],
-  text: {
-    prompt: {
-      description: "<p>This site uses cookies to improve the user experience, provide personalized content, and analyze traffic.</p>",
-      acceptAllButtonText: "Accept all",
-      acceptAllButtonAccessibleLabel: "Accept all cookies",
-      rejectNonEssentialButtonText: "Reject non-essential",
-      rejectNonEssentialButtonAccessibleLabel: "Reject all non-essential cookies",
-      preferencesButtonText: "Preferences",
-      preferencesButtonAccessibleLabel: "Toggle preferences"
-    },
-    preferences: {
-      title: "Customize your cookie preferences",
-      description: "<p>We respect your right to privacy. You can choose not to allow some types of cookies. Your cookie preferences will apply across our website.</p>",
-      saveButtonText: "Save and close",
-      saveButtonAccessibleLabel: "Save your cookie preferences",
-      creditLinkText: "Get this banner for free",
-      creditLinkAccessibleLabel: "Get this banner for free"
-    }
-  }
-});
-</script>
+    });
+    </script>
     <style>
         :root {
             --primary: #0052cc;
@@ -152,6 +152,17 @@ window.silktideConsentManager.init({
         
         .menu-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 5px; }
         .menu-toggle span { display: block; width: 22px; height: 2px; background: var(--white); border-radius: 2px; transition: var(--transition); }
+
+        /* ハンバーガーメニューのアニメーション効果 */
+        .menu-toggle.active span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .menu-toggle.active span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
 
         /* ヘッダー */
         header {
@@ -237,71 +248,74 @@ window.silktideConsentManager.init({
             .nav-links.active {
                 display: flex; position: absolute; top: 100%; left: 0; width: 100%;
                 background: var(--dark); flex-direction: column; padding: 2rem 0;
+                align-items: center;
+                gap: 1.5rem;
+                box-shadow: 0 10px 15px rgba(0,0,0,0.3);
             }
             .menu-toggle { display: flex; }
         }
 
-                    .form-group {
-                margin-bottom: 1.5rem;
-                text-align: left;
-            }
-            .form-group label {
-                display: block;
-                font-weight: 700;
-                font-size: 0.9rem;
-                color: var(--dark);
-                margin-bottom: 0.5rem;
-                letter-spacing: 0.5px;
-            }
-            .form-control {
-                width: 100%;
-                padding: 1rem 1.25rem;
-                border-radius: 14px;
-                border: 1px solid rgba(226, 232, 240, 0.8);
-                background-color: var(--bg);
-                color: var(--text);
-                font-family: inherit;
-                font-size: 1rem;
-                transition: var(--transition);
-            }
-            .form-control:focus {
-                border-color: var(--accent);
-                background-color: var(--white);
-                box-shadow: 0 0 0 4px rgba(0, 191, 255, 0.15);
-            }
-            select.form-control {
-                cursor: pointer;
-                -webkit-appearance: none;
-                -moz-appearance: none;
-                appearance: none;
-                background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://w3.org' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23334155' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
-                background-repeat: no-repeat;
-                background-position: right 1.25rem center;
-                background-size: 1rem;
-                padding-right: 3rem;
-            }
-            .form-submit-btn {
-                width: 100%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 15px;
-                background: var(--gradient-accent);
-                color: var(--white);
-                border: none;
-                padding: 1.25rem 2.5rem;
-                border-radius: 20px;
-                font-weight: 700;
-                font-size: 1.2rem;
-                cursor: pointer;
-                transition: var(--transition);
-                box-shadow: 0 10px 25px rgba(0, 82, 204, 0.15);
-                margin-top: 2rem;
-            }
-            .form-submit-btn:hover {
-                transform: translateY(-3px);
-                box-shadow: 0 15px 35px rgba(0, 82, 204, 0.25);
-            }
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.5px;
+        }
+        .form-control {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            border-radius: 14px;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        .form-control:focus {
+            border-color: var(--accent);
+            background-color: var(--white);
+            box-shadow: 0 0 0 4px rgba(0, 191, 255, 0.15);
+        }
+        select.form-control {
+            cursor: pointer;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23334155' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+            background-repeat: no-repeat;
+            background-position: right 1.25rem center;
+            background-size: 1rem;
+            padding-right: 3rem;
+        }
+        .form-submit-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            background: var(--gradient-accent);
+            color: var(--white);
+            border: none;
+            padding: 1.25rem 2.5rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 10px 25px rgba(0, 82, 204, 0.15);
+            margin-top: 2rem;
+        }
+        .form-submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 82, 204, 0.25);
+        }
     </style>
 </head>
 <body>
@@ -318,7 +332,7 @@ window.silktideConsentManager.init({
                 <option value="pt">Português</option>
             </select>
 
-            <button class="menu-toggle" id="menuToggle">
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation">
                 <span></span><span></span><span></span>
             </button>
 
@@ -329,11 +343,8 @@ window.silktideConsentManager.init({
                 <li><a href="#services" data-t="nav_services">サービス</a></li>
                 <li><a href="/blog" data-t="nav_note">note</a></li>
                 <li><a href="/docs" data-t="nav_docs">ドキュメント</a></li>
-               <li><a href="/register" data-t="register">登録</a></li>
+                <li><a href="/register" data-t="register">登録</a></li>
                 <li><a href="/login" data-t="login">ログイン</a></li>
-                
-                
-
             </ul>
         </div>
     </nav>
@@ -356,15 +367,13 @@ window.silktideConsentManager.init({
             <p data-t="services_body">We provide a multi-layered ecosystem including legitimate device guidance and digital literacy advocacy. We plan to sequentially launch diverse digital solutions to meet the evolving needs of the global community.</p>
         </section>
 
-              <!-- [お問い合わせフォーム] -->
+        <!-- [お問い合わせフォーム] -->
         <section class="card" id="contact">
             <h2 data-t="contact_title">Contact Us</h2>
             <p data-t="contact_body" style="color: var(--text-light); margin-bottom: 2rem;">プロジェクトに関するご質問やご相談は、以下のフォームよりお気軽にお問い合わせください。</p>
             
-            <!-- 送信先は開通済みのCloudflare Workersを指定 -->
             <form action="https://form-api.ryopc.f5.si" method="POST" id="contactForm">
                 
-                <!-- 送信完了後に自動で戻ってくるページ（元のURLを指定） -->
                 <input type="hidden" name="_redirect" value="https://ryopc.f5.si">
 
                 <div class="form-group">
@@ -396,13 +405,6 @@ window.silktideConsentManager.init({
                 </button>
             </form>
         </section>
-
-        <!-- [ここから新しい内容を追加できます]
-        <section class="card" id="new-section">
-            <h2 data-t="new_title">New Section Title</h2>
-            <p data-t="new_body">New content description here...</p>
-        </section>
-        -->
 
         <a href="/docs" class="docs-link-button">
             <span data-t="btn_docs">View Project Documentation</span> <span>➔</span>
@@ -438,14 +440,15 @@ window.silktideConsentManager.init({
 
     <script>
     // --- 翻訳データ ---
-    // カンマ（,）の不足により発生していた構文エラーをすべて修正しました。
     const translations = {
         ja: {
             nav_home: "ホーム",
-            About-the-Operator: "運営者について",
+            "About-the-Operator": "運営者について",
             nav_mission: "ミッション",
             nav_services: "サービス",
             nav_docs: "ドキュメント",
+            register: "登録",
+            login: "ログイン",
             hero_title: "ryopc org",
             hero_desc: "世界中の誰もが、デジタルデバイスの正当なサポートを受けられる社会を目指します。",
             mission_title: "私たちのミッション",
@@ -458,14 +461,26 @@ window.silktideConsentManager.init({
             cookie_deny: "拒否",
             chat_btn: "チャットサポート",
             status_text: "ステータス: Open Source Collective (米国カリフォルニア州) への申請中",
-            nav_note: "ブログ"
+            nav_note: "ブログ",
+            contact_title: "お問い合わせ",
+            contact_body: "プロジェクトに関するご質問やご相談は、以下のフォームよりお気軽にお問い合わせください。",
+            label_name: "お名前",
+            label_email: "メールアドレス",
+            label_subject: "ご用件",
+            label_message: "メッセージ内容",
+            opt_general: "一般のお問い合わせ",
+            opt_project: "プロジェクトへの参加",
+            opt_other: "その他",
+            btn_submit: "メッセージを送信"
         },
         en: {
             nav_home: "Home",
             nav_mission: "Mission",
             nav_services: "Services",
-            About-the-Operator: "About the Operator",
+            "About-the-Operator": "About the Operator",
             nav_docs: "Docs",
+            register: "Register",
+            login: "Login",
             hero_title: "ryopc org",
             hero_desc: "Ensuring everyone, everywhere, has access to legitimate support for digital devices.",
             mission_title: "Our Mission",
@@ -478,15 +493,26 @@ window.silktideConsentManager.init({
             cookie_deny: "Deny",
             chat_btn: "Chat Support",
             status_text: "Status: Under application for Open Source Collective (Covina, CA, USA)",
-            nav_note: "blog"
+            nav_note: "blog",
+            contact_title: "Contact Us",
+            contact_body: "If you have any questions or inquiries about the project, please feel free to contact us using the form below.",
+            label_name: "Name",
+            label_email: "Email Address",
+            label_subject: "Subject",
+            label_message: "Message",
+            opt_general: "General Inquiry",
+            opt_project: "Join the Project",
+            opt_other: "Other",
+            btn_submit: "Send Message"
         },
         pt: {
             nav_home: "Início",
             nav_mission: "Missão",
-            
-        nav_services: "Serviços",
-            About-the-Operator: "O operatorze",
+            nav_services: "Serviços",
+            "About-the-Operator": "Sobre o Operador",
             nav_docs: "Docs",
+            register: "Registrar",
+            login: "Login",
             hero_title: "ryopc org",
             hero_desc: "Garantindo que todos, em todos os lugares, tenham acesso a suporte legítimo para dispositivos digitais.",
             mission_title: "Nossa Missão",
@@ -499,9 +525,48 @@ window.silktideConsentManager.init({
             cookie_deny: "Recusar",
             chat_btn: "Suporte por Chat",
             status_text: "Status: Em processo de candidatura para Open Source Collective (Covina, CA, EUA)",
-            nav_note: "Blog"
+            nav_note: "Blog",
+            contact_title: "Contate-nos",
+            contact_body: "Se você tiver alguma dúvida sobre o projeto, sinta-se à vontade para nos contatar usando o formulário abaixo.",
+            label_name: "Nome",
+            label_email: "Endereço de Email",
+            label_subject: "Assunto",
+            label_message: "Mensagem",
+            opt_general: "Consulta Geral",
+            opt_project: "Participar do Projeto",
+            opt_other: "Outro",
+            btn_submit: "Enviar Mensagem"
         }
     };
+
+    // --- ハンバーガーメニューの開閉処理 ---
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+
+    if (menuToggle && navLinks) {
+        menuToggle.addEventListener('click', (e) => {
+            e.stopPropagation(); // ナビゲーションバー外クリックイベントの干渉を避ける
+            menuToggle.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // メニューリンクをクリックした際に自動で閉じる
+        const links = navLinks.querySelectorAll('a');
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // 展開したメニュー外のエリアをタップ/クリックしたときに閉じる
+        document.addEventListener('click', (e) => {
+            if (!navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
+                menuToggle.classList.remove('active');
+                navLinks.classList.remove('active');
+            }
+        });
+    }
 
     // --- 言語切り替え機能 ---
     function changeLanguage(lang) {
@@ -514,6 +579,25 @@ window.silktideConsentManager.init({
                 el.innerHTML = translations[lang][key];
             }
         });
+
+        // プレースホルダー等の翻訳も設定
+        const nameInput = document.getElementById('form_name');
+        const emailInput = document.getElementById('form_email');
+        const msgInput = document.getElementById('form_message');
+        
+        if (lang === 'ja') {
+            if (nameInput) nameInput.placeholder = 'お名前を入力してください';
+            if (emailInput) emailInput.placeholder = 'your.email@example.com';
+            if (msgInput) msgInput.placeholder = 'メッセージをここに入力してください...';
+        } else if (lang === 'pt') {
+            if (nameInput) nameInput.placeholder = 'Seu Nome';
+            if (emailInput) emailInput.placeholder = 'seu.email@exemplo.com';
+            if (msgInput) msgInput.placeholder = 'Digite sua mensagem aqui...';
+        } else {
+            if (nameInput) nameInput.placeholder = 'Your Name';
+            if (emailInput) emailInput.placeholder = 'your.email@example.com';
+            if (msgInput) msgInput.placeholder = 'Type your message here...';
+        }
     }
 
     // --- セーフストレージ ---
@@ -521,59 +605,76 @@ window.silktideConsentManager.init({
         get: (key) => { try { return localStorage.getItem(key); } catch (e) { return window['fb_' + key] || null; } },
         set: (key, val) => { try { localStorage.setItem(key, val); } catch (e) { window['fb_' + key] = val; } }
     };
-        document.getElementById('contactForm')?.addEventListener('submit', async function(e) {
-    // 1. 通常のページ遷移（画面が白くなる挙動）を完全にストップ
-    e.preventDefault();
 
-    const form = this;
-    const submitBtn = form.querySelector('.form-submit-btn');
-    const originalBtnHtml = submitBtn.innerHTML;
+    // 初期化時に保存された言語設定を読み込む
+    window.addEventListener('DOMContentLoaded', () => {
+        const savedLang = safeStorage.get("preferred_lang") || 'ja';
+        const langSelector = document.getElementById('langSelector');
+        if (langSelector) {
+            langSelector.value = savedLang;
+        }
+        changeLanguage(savedLang);
+    });
 
-    // 2. 送信ボタンを「送信中」のデザインに変えて二重送信を防止
-    submitBtn.innerHTML = '<span>Sending...</span>';
-    submitBtn.style.opacity = '0.6';
-    submitBtn.style.pointerEvents = 'none';
+    // --- お問い合わせフォームの送信制御 ---
+    document.getElementById('contactForm')?.addEventListener('submit', async function(e) {
+        // 通常の画面が白くなるページ遷移（デフォルトの挙動）を防止
+        e.preventDefault();
 
-    // 3. 入力されたデータを全自動で回収
-    const formData = new FormData(form);
+        const form = this;
+        const submitBtn = form.querySelector('.form-submit-btn');
+        const originalBtnHtml = submitBtn.innerHTML;
 
-    try {
-      // 4. バックエンドのWorkers（form-api）へ裏側でデータをPOST送信
-      const response = await fetch(form.action, {
-        method: 'POST',
-        body: formData,
-        mode: 'no-cors' // クロスドメイン間の通信によるエラーを回避して確実に発動させるモード
-      });
+        // 送信ボタンの二重送信防止設定
+        submitBtn.innerHTML = '<span>Sending...</span>';
+        submitBtn.style.opacity = '0.6';
+        submitBtn.style.pointerEvents = 'none';
 
-      // 5. 送信成功時の演出（フォームカードの中身をきれいなサンクスメッセージに書き換える）
-      const cardSection = document.getElementById('contact');
-      if (cardSection) {
-        cardSection.style.opacity = '0';
-        setTimeout(() => {
-          cardSection.innerHTML = `
-            <h2 style="color: var(--primary);">Thank You!</h2>
-            <p style="font-size: 1.1rem; margin-top: 1.5rem;">メッセージは正常に送信されました。<br>裏側のコックピット（PWA）へリアルタイムに通知されました。</p>
-            <div style="text-align: center; margin-top: 2rem;">
-               <div style="display:inline-block; width: 12px; height: 12px; background: var(--accent); border-radius:50%; box-shadow: 0 0 12px var(--accent);"></div>
-            </div>
-          `;
-          cardSection.style.opacity = '1';
-        }, 400);
-      }
+        const formData = new FormData(form);
 
-    } catch (error) {
-      console.error('Submission Error:', error);
-      alert('送信中にエラーが発生しました。時間を置いて再度お試しください。');
-      
-      // エラーが起きた場合はボタンを元に戻す
-      submitBtn.innerHTML = originalBtnHtml;
-      submitBtn.style.opacity = '1';
-      submitBtn.style.pointerEvents = 'auto';
-    }
-});
+        try {
+            // バックエンドへ非同期送信
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                mode: 'no-cors' // クロスドメイン制限を回避して確実に到達させる
+            });
 
+            // 送信完了演出
+            const cardSection = document.getElementById('contact');
+            if (cardSection) {
+                cardSection.style.opacity = '0';
+                setTimeout(() => {
+                    cardSection.innerHTML = `
+                        <h2 style="color: var(--primary);">Thank You!</h2>
+                        <p style="font-size: 1.1rem; margin-top: 1.5rem;">メッセージは正常に送信されました。<br>リアルタイムにコックピット（PWA）へ通知されました。</p>
+                        <div style="text-align: center; margin-top: 2rem;">
+                            <div style="display:inline-block; width: 12px; height: 12px; background: var(--accent); border-radius:50%; box-shadow: 0 0 12px var(--accent);"></div>
+                        </div>
+                    `;
+                    cardSection.style.opacity = '1';
+                }, 400);
+            }
 
- 
+        } catch (error) {
+            console.error('Submission Error:', error);
+            alert('送信中にエラーが発生しました。時間を置いて再度お試しください。');
+            
+            // エラー時は送信ボタンを再度有効にする
+            submitBtn.innerHTML = originalBtnHtml;
+            submitBtn.style.opacity = '1';
+            submitBtn.style.pointerEvents = 'auto';
+        }
+    });
+
+    // --- スクロールインジケーターの制御 ---
+    window.addEventListener('scroll', () => {
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        const progress = document.getElementById("scroll-progress");
+        if (progress) progress.style.width = scrolled + "%";
+    });
     </script>
 </body>
 </html>
