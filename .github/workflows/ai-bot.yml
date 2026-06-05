@@ -6,8 +6,9 @@ on:
   pull_request:
     types: [opened, synchronize]
 
+# 👇 権限を修正：普通のPush時にコミットへ書き込めるよう 'contents: write' に変更
 permissions:
-  contents: read
+  contents: write
   pull-requests: write
   issues: write
 
@@ -49,8 +50,8 @@ jobs:
           # JSON形式のデータを作成（改行やクォーテーションを安全に処理）
           jq -n --arg msg "$PROMPT" '{"contents": [{"parts": [{"text": $msg}]}]}' > payload.json
           
-          # Gemini APIを呼び出し
-          RESPONSE=$(curl -s -X POST "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key={GEMINI_KEY}" \
+          # 👇 修正：{GEMINI_KEY} に $ が抜けていたのを $GEMINI_KEY に修正
+          RESPONSE=$(curl -s -X POST "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=$GEMINI_KEY" \
             -H "Content-Type: application/json" \
             -d @payload.json)
           
