@@ -418,18 +418,22 @@
             <p data-t="services_body">We provide a multi-layered ecosystem including legitimate device guidance and digital literacy advocacy. We plan to sequentially launch diverse digital solutions to meet the evolving needs of the global community.</p>
         </section>
 
-<section class="card" id="app-release">
-    <h2 data-t="app_release_title">公式アプリリリースのお知らせ</h2>
-    <p data-t="app_release_body">公式モバイルアプリ「ryopc-app」の提供を開始いたしました。当社のデジタルエコシステムをスマートフォンの画面から直接ご利用いただけるようになり、シームレスなデバイスガイダンスやデジタルリテラシー向上のための便利なツールをいつでもどこでもご活用いただけます。</p>
+<div class="announcement-card">
+    <h2 class="announcement-title">
+      <span class="accent-bar"></span>
+      公式アプリリリースのお知らせ
+    </h2>
+    <p class="announcement-desc">
+      公式モバイルアプリ「ryopc-app」の提供を開始いたしました。当社のデジタルエコシステムをスマートフォンの画面から直接ご利用いただけるようになり、シームレスなデバイスガイダンスやデジタルリテラシー向上のための便利なツールをいつでもどこでもご活用いただけます。
+    </p>
     
-<button id="pwa-install-btn" class="install-button" style="display: none;">
-  📱 アプリをインストール
-</button>
-
+    <!-- PWAインストールボタン（カードの内部に綺麗に収まる配置） -->
+    <div class="btn-container">
+      <button id="pwa-install-btn" class="install-button" style="display: none;">
+        📱 アプリをインストール
+      </button>
     </div>
-</section>
-
-
+  </div>
 
         <!-- [お問い合わせフォーム] -->
         <section class="card" id="contact">
@@ -742,43 +746,36 @@
         const progress = document.getElementById("scroll-progress");
         if (progress) progress.style.width = scrolled + "%";
     });
-          // PWAインストールボタンの制御ロジック
-  let deferredPrompt;
-  const installBtn = document.getElementById('pwa-install-btn');
+    // サービスワーカーの登録
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js');
+      });
+    }
 
-  // ブラウザがインストール可能と判断したときに発火
-  window.addEventListener('beforeinstallprompt', (e) => {
-    // デフォルトのポップアップを阻止
-    e.preventDefault();
-    // イベントを一時保存
-    deferredPrompt = e;
-    // インストールボタンを表示
-    installBtn.style.display = 'inline-block';
-  });
+    // PWAインストールボタンの制御ロジック
+    let deferredPrompt;
+    const installBtn = document.getElementById('pwa-install-btn');
 
-  // ボタンがクリックされたときの処理
-  installBtn.addEventListener('click', async () => {
-    if (!deferredPrompt) return;
-    
-    // 保存しておいたインストール画面（ダイアログ）を表示
-    deferredPrompt.prompt();
-    
-    // ユーザーが「インストール」か「キャンセル」どちらを押したか判定
-    const { outcome } = await deferredPrompt.userChoice;
-    console.log(`ユーザーの選択: ${outcome}`);
-    
-    // 一度処理したらイベントをクリアする
-    deferredPrompt = null;
-    // ボタンを再び隠す
-    installBtn.style.display = 'none';
-  });
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBtn.style.display = 'inline-block'; // インストール可能ならボタンを表示
+    });
 
-  // すでにインストール済みの場合はボタンを非表示に維持
-  window.addEventListener('appinstalled', () => {
-    console.log('PWAのインストールが完了しました！');
-    installBtn.style.display = 'none';
-    deferredPrompt = null;
-  });
+    installBtn.addEventListener('click', async () => {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      console.log(`ユーザーの選択: ${outcome}`);
+      deferredPrompt = null;
+      installBtn.style.display = 'none';
+    });
+
+    window.addEventListener('appinstalled', () => {
+      installBtn.style.display = 'none';
+      deferredPrompt = null;
+    });
     </script>
 </body>
 </html>
