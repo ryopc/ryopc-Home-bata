@@ -321,19 +321,30 @@
     margin: 24px 0;
     text-align: center;
 }
-
-/* APKダウンロードボタンのカスタムデザイン */
-.btn-apk {
-    display: inline-block;
-    padding: 12px 32px;
-    background-color: #248814; /* 認識しやすいグリーンカラー */
-    color: #ffffff;
-    text-decoration: none;
-    font-weight: bold;
-    border-radius: 6px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.2s ease, transform 0.1s ease;
+.install-button {
+  background-color: #64ffda; /* アクセント用の明るいグリーン */
+  color: #0a192f;            /* 文字色は背景と同じネイビー */
+  border: none;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(100, 255, 218, 0.3);
+  transition: all 0.2s ease-in-out;
+  margin-top: 20px;
 }
+
+.install-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(100, 255, 218, 0.5);
+  background-color: #52e0bd;
+}
+
+.install-button:active {
+  transform: translateY(1px);
+}
+
 
 /* ボタンのホバー効果 */
 .btn-apk:hover {
@@ -411,12 +422,10 @@
     <h2 data-t="app_release_title">公式アプリリリースのお知らせ</h2>
     <p data-t="app_release_body">公式モバイルアプリ「ryopc-app」の提供を開始いたしました。当社のデジタルエコシステムをスマートフォンの画面から直接ご利用いただけるようになり、シームレスなデバイスガイダンスやデジタルリテラシー向上のための便利なツールをいつでもどこでもご活用いただけます。</p>
     
-    <div class="app-buttons">
-        <a href="https://github.com/ryopc/ryopc-app/releases/download/apk/ryopc-app.apk" class="btn btn-apk" data-t="download_apk">APKファイルをダウンロード</a>
-    </div>
+<button id="pwa-install-btn" class="install-button" style="display: none;">
+  📱 アプリをインストール
+</button>
 
-    <div class="app-notice" style="margin-top: 15px; padding: 10px; border-left: 4px solid #ffcc00; background-color: #fff9e6; font-size: 0.9em;">
-        <p data-t="download_notice">※ダウンロード時に「有害なファイルの可能性があります」や「安全ではありません」といった警告が表示される場合がありますが、アプリの仕様によるものです。問題ありませんので、そのまま「続行」または「ダウンロードを続ける」を選択してインストールを進めてください。</p>
     </div>
 </section>
 
@@ -733,6 +742,43 @@
         const progress = document.getElementById("scroll-progress");
         if (progress) progress.style.width = scrolled + "%";
     });
+          // PWAインストールボタンの制御ロジック
+  let deferredPrompt;
+  const installBtn = document.getElementById('pwa-install-btn');
+
+  // ブラウザがインストール可能と判断したときに発火
+  window.addEventListener('beforeinstallprompt', (e) => {
+    // デフォルトのポップアップを阻止
+    e.preventDefault();
+    // イベントを一時保存
+    deferredPrompt = e;
+    // インストールボタンを表示
+    installBtn.style.display = 'inline-block';
+  });
+
+  // ボタンがクリックされたときの処理
+  installBtn.addEventListener('click', async () => {
+    if (!deferredPrompt) return;
+    
+    // 保存しておいたインストール画面（ダイアログ）を表示
+    deferredPrompt.prompt();
+    
+    // ユーザーが「インストール」か「キャンセル」どちらを押したか判定
+    const { outcome } = await deferredPrompt.userChoice;
+    console.log(`ユーザーの選択: ${outcome}`);
+    
+    // 一度処理したらイベントをクリアする
+    deferredPrompt = null;
+    // ボタンを再び隠す
+    installBtn.style.display = 'none';
+  });
+
+  // すでにインストール済みの場合はボタンを非表示に維持
+  window.addEventListener('appinstalled', () => {
+    console.log('PWAのインストールが完了しました！');
+    installBtn.style.display = 'none';
+    deferredPrompt = null;
+  });
     </script>
 </body>
 </html>
