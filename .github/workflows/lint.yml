@@ -1,0 +1,25 @@
+name: Code Format Check
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Prettier
+        # HTML/JS/CSS/JSONすべてに対応するPrettierをインストール
+        run: npm install -g prettier
+
+      - name: Check File Format
+        # すべての対象ファイルの形式をチェック（反していればエラーになる）
+        run: prettier --check "**/*.{html,js,css,json}"
