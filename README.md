@@ -16,8 +16,10 @@ We are developing a borderless, multi-layered ecosystem starting with legitimate
 * **Live Chat Support:** Powered by **Channel Talk** (Integrated)
 
 ---
+## certification
+[![doi 10.5281/zenodo.20619333](https://zenodo.org/badge/DOI/10.5281/zenodo.20619333.svg)](https://doi.org/10.5281/zenodo.20619333)
 
-
+---
 ## license
 license by **Apache-2.0** 
 
