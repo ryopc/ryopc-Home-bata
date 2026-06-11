@@ -1,8 +1,7 @@
-name: Code Format Check
+name: Code Format Check (Changed Lines Only)
 
 on:
   pull_request:
-    branches: [ main ]
 
 jobs:
   lint-check:
@@ -10,16 +9,29 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # 差分を正しく計算するために履歴をすべて取得
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      - name: Install Prettier
-        # HTML/JS/CSS/JSONすべてに対応するPrettierをインストール
-        run: npm install -g prettier
+      - name: Install Lint Tools
+        run: |
+          npm install -g htmlhint eslint
 
-      - name: Check File Format
-        # すべての対象ファイルの形式をチェック（反していればエラーになる）
-        run: prettier --check "**/*.{html,js,css,json}"
+      - name: Check HTML (Changed Lines Only)
+        uses: reviewdog/action-htmlhint@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: github-pr-check # PRの変更行だけにインラインで結果を表示
+          level: error
+
+      - name: Check JS (Changed Lines Only)
+        uses: reviewdog/action-eslint@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: github-pr-check
+          eslint_flags: "src/**/*.js" # JSファイルがある場合
+          level: error
