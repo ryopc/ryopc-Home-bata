@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="robots" content="noindex, nofollow">
     <title>ryopc Global Digital Support</title>
+
     
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/ryopc/ryopc-Home@main/favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -321,19 +322,30 @@
     margin: 24px 0;
     text-align: center;
 }
-
-/* APKダウンロードボタンのカスタムデザイン */
-.btn-apk {
-    display: inline-block;
-    padding: 12px 32px;
-    background-color: #248814; /* 認識しやすいグリーンカラー */
-    color: #ffffff;
-    text-decoration: none;
-    font-weight: bold;
-    border-radius: 6px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.2s ease, transform 0.1s ease;
+.install-button {
+  background-color: #64ffda; /* アクセント用の明るいグリーン */
+  color: #0a192f;            /* 文字色は背景と同じネイビー */
+  border: none;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(100, 255, 218, 0.3);
+  transition: all 0.2s ease-in-out;
+  margin-top: 20px;
 }
+
+.install-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(100, 255, 218, 0.5);
+  background-color: #52e0bd;
+}
+
+.install-button:active {
+  transform: translateY(1px);
+}
+
 
 /* ボタンのホバー効果 */
 .btn-apk:hover {
@@ -357,6 +369,30 @@
     line-height: 1.6;
     color: #444444;
 }
+        .btn-container {
+  text-align: center;
+  margin-top: 25px;
+}
+
+.install-button {
+  background-color: #0076ff; /* タイトルの縦線と同じ鮮やかなブルー */
+  color: #ffffff;
+  border: none;
+  padding: 12px 30px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 118, 255, 0.2);
+  transition: all 0.2s ease-in-out;
+}
+
+.install-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 118, 255, 0.4);
+  background-color: #0062d6;
+}
+
     </style>
 </head>
 <body>
@@ -379,11 +415,10 @@
 
             <ul class="nav-links" id="navLinks">
                 <li><a href="#" data-t="nav_home">ホーム</a></li>
-                <li><a href="/blog/articles/game-ryo/" data-t="About-the-Operator">運営者について</a></li>
-                <li><a href="#mission" data-t="nav_mission">ミッション</a></li>
-                <li><a href="#services" data-t="nav_services">サービス</a></li>
+                <li><a href="https://game-ryo.is-a.dev" data-t="About-the-Operator">運営者について</a></li>
                 <li><a href="/blog" data-t="nav_note">note</a></li>
                 <li><a href="/docs" data-t="nav_docs">ドキュメント</a></li>
+                <li><a href="https://quiz.ryopc.f5.si" data-t="nav_it">小学生向けIt検定</a></li>
                 <li><a href="/register" data-t="register">登録</a></li>
                 <li><a href="/login" data-t="login">ログイン</a></li>
             </ul>
@@ -408,20 +443,23 @@
             <p data-t="services_body">We provide a multi-layered ecosystem including legitimate device guidance and digital literacy advocacy. We plan to sequentially launch diverse digital solutions to meet the evolving needs of the global community.</p>
         </section>
 
-<section class="card" id="app-release">
-    <h2 data-t="app_release_title">公式アプリリリースのお知らせ</h2>
-    <p data-t="app_release_body">公式モバイルアプリ「ryopc-app」の提供を開始いたしました。当社のデジタルエコシステムをスマートフォンの画面から直接ご利用いただけるようになり、シームレスなデバイスガイダンスやデジタルリテラシー向上のための便利なツールをいつでもどこでもご活用いただけます。</p>
-    
-    <div class="app-buttons">
-        <a href="https://github.com/ryopc/ryopc-app/releases/download/apk/ryopc-app.apk" class="btn btn-apk" data-t="download_apk">APKファイルをダウンロード</a>
-    </div>
-
-    <div class="app-notice" style="margin-top: 15px; padding: 10px; border-left: 4px solid #ffcc00; background-color: #fff9e6; font-size: 0.9em;">
-        <p data-t="download_notice">※ダウンロード時に「有害なファイルの可能性があります」や「安全ではありません」といった警告が表示される場合がありますが、アプリの仕様によるものです。問題ありませんので、そのまま「続行」または「ダウンロードを続ける」を選択してインストールを進めてください。</p>
-    </div>
-</section>
-
-
+<section class="card" id="mission">
+  <div class="announcement-card">
+    <h2 class="announcement-title">
+      <span class="accent-bar"></span>
+      公式アプリリリースのお知らせ
+    </h2>
+    <p class="announcement-desc">
+      公式モバイルアプリ「ryopc-app」の提供を開始いたしました。当社のデジタルエコシステムをスマートフォンの画面から直接ご利用いただけるようになり、シームレスなデバイスガイダンスやデジタルリテラシー向上のための便利なツールをいつでもどこでもご活用いただけます。
+    </p>
+      
+    <!-- 普通に表示されるインストールボタン -->
+<div class="btn-container">
+  <a href="https://app.ryopc.f5.si" class="install-button" style="text-decoration: none; display: inline-block; text-align: center;">
+    📱 アプリをインストール
+  </a>
+</div>
+<section class="card" id="mission">
 
         <!-- [お問い合わせフォーム] -->
         <section class="card" id="contact">
@@ -487,10 +525,12 @@
 
     <footer>
         <p>&copy; 2026 ryopc Global Initiative. All Rights Reserved.</p>
-        <div class="status-badge">
-            <span class="status-dot"></span>
-            <span data-t="status_text">Status: Under application for Open Source Collective (Covina, CA, USA)</span>
-        </div>
+<a href="https://www.bestpractices.dev/projects/13120"><img src="https://www.bestpractices.dev/projects/13120/baseline"></a>
+<!-- Web TrustMark Badge with Popup -->
+<a href="https://webtrustmark.com/verify/11" target="_blank" rel="noopener noreferrer" class="wtm-badge">
+  <img src="https://webtrustmark.com/api/badge/11?style=compact" alt="ryopc-org - Web TrustMark Verified" />
+</a>
+<script src="https://webtrustmark.com/api/verification-popup/11.js" async></script>
     </footer>
     </div></div>
         <script>
@@ -502,6 +542,7 @@
             nav_mission: "ミッション",
             nav_services: "サービス",
             nav_docs: "ドキュメント",
+            nav_it:"小学生向けit検定",
             register: "登録",
             login: "ログイン",
             hero_title: "ryopc org",
@@ -534,6 +575,7 @@
             nav_services: "Services",
             "About-the-Operator": "About the Operator",
             nav_docs: "Docs",
+            nav_it:"IT Certification for Elementary School Students",
             register: "Register",
             login: "Login",
             hero_title: "ryopc org",
@@ -566,6 +608,7 @@
             nav_services: "Serviços",
             "About-the-Operator": "Sobre o Operador",
             nav_docs: "Docs",
+            nav_it:"Certificação IT para alunos do ensino básico",
             register: "Registrar",
             login: "Login",
             hero_title: "ryopc org",

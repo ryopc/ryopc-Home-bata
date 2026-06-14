@@ -16,4 +16,13 @@ We are developing a borderless, multi-layered ecosystem starting with legitimate
 * **Live Chat Support:** Powered by **Channel Talk** (Integrated)
 
 ---
+## certification
+[![doi 10.5281/zenodo.20619333](https://zenodo.org/badge/DOI/10.5281/zenodo.20619333.svg)](https://doi.org/10.5281/zenodo.20619333)  [![OpenSSF Baseline](https://www.bestpractices.dev/projects/13120/baseline?cacheSeconds=0)](https://www.bestpractices.dev/projects/13120)
+
+
+---
+## license
+license by **Apache-2.0** 
+
+---
 *“Ensuring global digital equity, one device at a time.” — ryopcCEO*
